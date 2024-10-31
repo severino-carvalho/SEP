@@ -5,11 +5,11 @@ import { TemaProvider } from './tema-provider'
 const queryClient = new QueryClient()
 
 export function Contexts({ children }: Readonly<IChildren>) {
-  return (
-    <QueryClientProvider client={queryClient}>
-      <TemaProvider defaultTema="system" storageKey="sep-ui-tema">
-        {children}
-      </TemaProvider>
-    </QueryClientProvider>
-  )
+	return (
+		<QueryClientProvider client={queryClient}>
+			<TemaProvider defaultTema='system' storageKey='sep-ui-tema'>
+				{children}
+			</TemaProvider>
+		</QueryClientProvider>
+	)
 }
