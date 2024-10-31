@@ -1,14 +1,4 @@
 import {
-	Calendar,
-	ChevronUp,
-	Home,
-	Inbox,
-	Search,
-	Settings,
-	User2
-} from 'lucide-react'
-
-import {
 	Sidebar,
 	SidebarContent,
 	SidebarFooter,
@@ -22,39 +12,28 @@ import {
 	SidebarTrigger
 } from '@/components/ui/sidebar'
 import {
+	Calendar,
+	ChevronUp,
+	Home,
+	Inbox,
+	Search,
+	Settings,
+	User2
+} from 'lucide-react'
+import { Link } from 'react-router-dom'
+import {
 	DropdownMenu,
 	DropdownMenuContent,
 	DropdownMenuItem,
 	DropdownMenuTrigger
 } from './ui/dropdown-menu'
 
-// Menu items.
 const items = [
-	{
-		title: 'Home',
-		url: '#',
-		icon: Home
-	},
-	{
-		title: 'Inbox',
-		url: '#',
-		icon: Inbox
-	},
-	{
-		title: 'Calendar',
-		url: '#',
-		icon: Calendar
-	},
-	{
-		title: 'Search',
-		url: '#',
-		icon: Search
-	},
-	{
-		title: 'Settings',
-		url: '#',
-		icon: Settings
-	}
+	{ title: 'Home', url: '/', icon: Home },
+	{ title: 'Inbox', url: '/about', icon: Inbox },
+	{ title: 'Calendar', url: '/configuracoes', icon: Calendar },
+	{ title: 'Search', url: '/configuracoes', icon: Search },
+	{ title: 'Settings', url: '/configuracoes', icon: Settings }
 ]
 
 export function AppSidebar({ open }: { open?: boolean }) {
@@ -82,10 +61,10 @@ export function AppSidebar({ open }: { open?: boolean }) {
 							{items.map(item => (
 								<SidebarMenuItem key={item.title}>
 									<SidebarMenuButton asChild>
-										<a href={item.url}>
+										<Link to={item.url}>
 											<item.icon />
 											<span>{item.title}</span>
-										</a>
+										</Link>
 									</SidebarMenuButton>
 								</SidebarMenuItem>
 							))}
