@@ -1,5 +1,3 @@
 export function App() {
-  return (
-    <main></main>
-  )
+	return <main></main>
 }
