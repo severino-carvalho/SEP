@@ -11,6 +11,7 @@ import {
 	SidebarMenuItem,
 	SidebarTrigger
 } from '@/components/ui/sidebar'
+import { RotasEnum } from '@/types/enums/RotasEnum'
 import {
 	Calendar,
 	ChevronUp,
@@ -29,14 +30,16 @@ import {
 } from './ui/dropdown-menu'
 
 const items = [
-	{ title: 'Home', url: '/', icon: Home },
-	{ title: 'Inbox', url: '/about', icon: Inbox },
-	{ title: 'Calendar', url: '/configuracoes', icon: Calendar },
-	{ title: 'Search', url: '/configuracoes', icon: Search },
-	{ title: 'Settings', url: '/configuracoes', icon: Settings }
+	{ title: 'Home', url: RotasEnum.HOME, icon: Home },
+	{ title: 'Inbox', url: RotasEnum.SOBRE, icon: Inbox },
+	{ title: 'Calendar', url: RotasEnum.CONFIGURACOES, icon: Calendar },
+	{ title: 'Search', url: RotasEnum.CONFIGURACOES, icon: Search },
+	{ title: 'Settings', url: RotasEnum.CONFIGURACOES, icon: Settings }
 ]
 
-export function AppSidebar({ open }: { open?: boolean }) {
+type AppSidebarProps = { open?: boolean }
+
+export function AppSidebar({ open }: Readonly<AppSidebarProps>) {
 	return (
 		<Sidebar collapsible='icon'>
 			<SidebarHeader>
