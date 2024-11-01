@@ -17,7 +17,10 @@ export default function AppLayout({ children }: Readonly<IChildren>) {
 			onOpenChange={handleSidebarOpen}
 		>
 			<AppSidebar open={sidebarOpen} />
-			{children}
+
+			<main className='flex flex-col w-full min-h-full'>
+				{children}
+			</main>
 		</SidebarProvider>
 	)
 }

@@ -12,6 +12,7 @@ import {
 	SidebarTrigger
 } from '@/components/ui/sidebar'
 import { RotasEnum } from '@/types/enums/RotasEnum'
+import { TooltipContent } from '@radix-ui/react-tooltip'
 import {
 	Calendar,
 	ChevronUp,
@@ -28,6 +29,7 @@ import {
 	DropdownMenuItem,
 	DropdownMenuTrigger
 } from './ui/dropdown-menu'
+import { Tooltip } from './ui/tooltip'
 
 const items = [
 	{ title: 'Home', url: RotasEnum.HOME, icon: Home },
@@ -65,8 +67,13 @@ export function AppSidebar({ open }: Readonly<AppSidebarProps>) {
 								<SidebarMenuItem key={item.title}>
 									<SidebarMenuButton asChild>
 										<Link to={item.url}>
-											<item.icon />
-											<span>{item.title}</span>
+											<Tooltip>
+												<item.icon />
+												<span>{item.title}</span>
+												<TooltipContent>
+													<p>Add to library</p>
+												</TooltipContent>
+											</Tooltip>
 										</Link>
 									</SidebarMenuButton>
 								</SidebarMenuItem>

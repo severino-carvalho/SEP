@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import AppLayout from './components/layouts/app-layout'
 import { About } from './components/pages/about'
@@ -10,9 +10,11 @@ import { RotasEnum } from './types/enums/RotasEnum'
 export function App() {
 	const [isLogado, setIsLogado] = useState<boolean>(false)
 
-	if (!isLogado) {
-		return <Login />
-	}
+	useEffect(() => {
+		setTimeout(() => setIsLogado(true), 3000);
+	}, [isLogado])
+
+	if (!isLogado) return <Login />
 
 	return (
 		<BrowserRouter>
