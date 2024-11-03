@@ -47,7 +47,7 @@ export function AppSidebar({ open }: Readonly<AppSidebarProps>) {
 
 	return (
 		<Sidebar collapsible='icon'>
-			<SidebarHeader>
+			<SidebarHeader className='pt-5'>
 				<SidebarMenu className='flex flex-row items-center justify-between'>
 					{open && (
 						<SidebarMenuItem className={'pl-2'}>

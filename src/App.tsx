@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import AppLayout from './components/layouts/app-layout'
 import { About } from './components/pages/about'
-import { Configuracoes } from './components/pages/configuracoes'
+import { Configuracoes } from './components/pages/configuracoes/configuracoes'
 import { Home } from './components/pages/home'
 import { Login } from './components/pages/login'
 import { ProtectedRoute } from './components/protect-router'
