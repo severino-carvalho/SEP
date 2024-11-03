@@ -3,6 +3,7 @@ import { SidebarProvider } from '@/components/ui/sidebar'
 import { IChildren } from '@/types/components/IChildren'
 import { useState } from 'react'
 import { Outlet } from 'react-router-dom'
+import { ContainerLayout } from './container-layout'
 
 export default function AppLayout({ children }: Readonly<Partial<IChildren>>) {
 	const [sidebarOpen, setSidebarOpen] = useState(true)
@@ -19,10 +20,12 @@ export default function AppLayout({ children }: Readonly<Partial<IChildren>>) {
 		>
 			<AppSidebar open={sidebarOpen} />
 
-			<main className='flex flex-col w-full min-h-full'>
-				{children}
-				<Outlet />
-			</main>
+			<ContainerLayout>
+				<main className='flex flex-col w-full min-h-full'>
+					{children}
+					<Outlet />
+				</main>
+			</ContainerLayout>
 		</SidebarProvider>
 	)
 }

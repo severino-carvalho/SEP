@@ -7,7 +7,7 @@ import {
 
 export function Home() {
 	return (
-		<div className='flex flex-1 flex-col w-full p-6 gap-4'>
+		<div className='flex flex-1 flex-col w-full gap-4'>
 			<Breadcrumb>
 				<BreadcrumbList>
 					<BreadcrumbItem>

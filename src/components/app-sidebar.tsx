@@ -43,8 +43,7 @@ const items = [
 type AppSidebarProps = { open?: boolean }
 
 export function AppSidebar({ open }: Readonly<AppSidebarProps>) {
-	const { isAuthenticated, login, logout } = useAuth()
-
+	const { logout } = useAuth()
 
 	return (
 		<Sidebar collapsible='icon'>
