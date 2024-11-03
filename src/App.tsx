@@ -1,30 +1,31 @@
-import { useEffect, useState } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import AppLayout from './components/layouts/app-layout'
 import { About } from './components/pages/about'
 import { Configuracoes } from './components/pages/configuracoes'
 import { Home } from './components/pages/home'
 import { Login } from './components/pages/login'
+import { ProtectedRoute } from './components/protect-router'
+import { Contexts } from './contexts'
+import { AuthProvider } from './contexts/auth-context'
 import { RotasEnum } from './types/enums/RotasEnum'
 
 export function App() {
-	const [isLogado, setIsLogado] = useState<boolean>(false)
-
-	useEffect(() => {
-		setTimeout(() => setIsLogado(true), 3000);
-	}, [isLogado])
-
-	if (!isLogado) return <Login />
-
 	return (
 		<BrowserRouter>
-			<AppLayout>
-				<Routes>
-					<Route path={RotasEnum.HOME} element={<Home />} />
-					<Route path={RotasEnum.SOBRE} element={<About />} />
-					<Route path={RotasEnum.CONFIGURACOES} element={<Configuracoes />} />
-				</Routes>
-			</AppLayout>
+			<Contexts>
+				<AuthProvider>
+					<Routes>
+						<Route path={RotasEnum.LOGIN} element={<Login />} />
+						<Route element={<ProtectedRoute />}>
+							<Route element={<AppLayout />}>
+								<Route path={RotasEnum.HOME} element={<Home />} />
+								<Route path={RotasEnum.SOBRE} element={<About />} />
+								<Route path={RotasEnum.CONFIGURACOES} element={<Configuracoes />} />
+							</Route>
+						</Route>
+					</Routes>
+				</AuthProvider>
+			</Contexts>
 		</BrowserRouter>
 	)
 }

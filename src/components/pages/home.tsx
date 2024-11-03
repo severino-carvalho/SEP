@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom'
 import {
 	Breadcrumb,
 	BreadcrumbItem,
@@ -8,7 +7,7 @@ import {
 
 export function Home() {
 	return (
-		<main className='flex flex-col w-full p-6 gap-4'>
+		<div className='flex flex-1 flex-col w-full p-6 gap-4'>
 			<Breadcrumb>
 				<BreadcrumbList>
 					<BreadcrumbItem>
@@ -26,13 +25,11 @@ export function Home() {
 				<div className='flex flex-1 w-1/2 bg-zinc-900 rounded-lg' />
 
 				<div className='flex flex-col flex-1 gap-4 rounded-lg'>
-					<div className='flex flex-1 bg-zinc-900 rounded-lg'>
-						<Link to='/about'>Go to About</Link>
-					</div>
+					<div className='flex flex-1 bg-zinc-900 rounded-lg' />
 					<div className='flex flex-1 bg-zinc-900 rounded-lg' />
 					<div className='flex flex-1 bg-zinc-900 rounded-lg' />
 				</div>
 			</div>
-		</main>
+		</div>
 	)
 }

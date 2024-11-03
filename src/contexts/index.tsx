@@ -1,6 +1,6 @@
 import { IChildren } from '@/types/components/IChildren'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { TemaProvider } from './tema-provider'
+import { TemaProvider } from './tema-context'
 
 const queryClient = new QueryClient()
 

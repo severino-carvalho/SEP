@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -6,11 +6,19 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { useAuth } from "@/hooks/use-auth";
+import { Navigate } from "react-router-dom";
 
 export function Login() {
+  const { isAuthenticated, login } = useAuth();
+
+  if (isAuthenticated) {
+    return <Navigate to="/" />;
+  }
+
   return (
     <div className="flex justify-center items-center w-full min-h-screen">
       <Card className="w-[350px]">
@@ -36,7 +44,7 @@ export function Login() {
         </CardContent>
 
         <CardFooter className="flex justify-center">
-          <Button className="w-full">Entrar</Button>
+          <Button onClick={login} className="w-full">Entrar</Button>
         </CardFooter>
       </Card>
     </div>

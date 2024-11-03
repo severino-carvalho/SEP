@@ -11,6 +11,7 @@ import {
 	SidebarMenuItem,
 	SidebarTrigger
 } from '@/components/ui/sidebar'
+import { useAuth } from '@/hooks/use-auth'
 import { RotasEnum } from '@/types/enums/RotasEnum'
 import { TooltipContent } from '@radix-ui/react-tooltip'
 import {
@@ -42,6 +43,9 @@ const items = [
 type AppSidebarProps = { open?: boolean }
 
 export function AppSidebar({ open }: Readonly<AppSidebarProps>) {
+	const { isAuthenticated, login, logout } = useAuth()
+
+
 	return (
 		<Sidebar collapsible='icon'>
 			<SidebarHeader>
@@ -100,7 +104,7 @@ export function AppSidebar({ open }: Readonly<AppSidebarProps>) {
 								<DropdownMenuItem>
 									<span>Billing</span>
 								</DropdownMenuItem>
-								<DropdownMenuItem>
+								<DropdownMenuItem className='hover:cursor-pointer' onClick={logout}>
 									<span>Sign out</span>
 								</DropdownMenuItem>
 							</DropdownMenuContent>

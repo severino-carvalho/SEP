@@ -1,5 +1,4 @@
-import { TemaProviderContext } from '@/hooks/use-tema'
-import { useEffect, useState } from 'react'
+import { createContext, useEffect, useState } from 'react'
 
 export type Tema = 'dark' | 'light' | 'system'
 
@@ -9,10 +8,17 @@ type TemaProviderProps = {
 	storageKey?: string
 }
 
-export type TemaProviderState = {
+type TemaProviderState = {
 	Tema: Tema
 	setTema: (Tema: Tema) => void
 }
+
+const initialState: TemaProviderState = {
+	Tema: 'system',
+	setTema: () => null
+}
+
+export const TemaProviderContext = createContext<TemaProviderState>(initialState)
 
 export function TemaProvider({
 	children,

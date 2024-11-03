@@ -1,5 +1,6 @@
 export enum RotasEnum {
 	HOME = '/',
+	LOGIN = '/login',
 	SOBRE = '/sobre',
 
 	// Configurações
