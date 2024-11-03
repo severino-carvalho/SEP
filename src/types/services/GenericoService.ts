@@ -1,5 +1,5 @@
+import { EntidadeDto } from '@/types/dtos/entidade.dto'
 import { FiltroResult } from '@/types/services/FiltroResult'
-import { EntidadeDto } from '@/types/dtos/EntidadeDto'
 
 export interface IGenericoService<S, R extends EntidadeDto> {
 	findAll(): Promise<FiltroResult<R>>

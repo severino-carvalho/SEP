@@ -12,7 +12,7 @@ import {
 	SidebarTrigger
 } from '@/components/ui/sidebar'
 import { useAuth } from '@/hooks/use-auth'
-import { RotasEnum } from '@/types/enums/RotasEnum'
+import { RotasEnum } from '@/types/enums/rotas-app-enum'
 import { TooltipContent } from '@radix-ui/react-tooltip'
 import {
 	Calendar,

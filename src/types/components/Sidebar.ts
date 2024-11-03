@@ -1,4 +1,4 @@
-import { RotasEnum } from '@/types/enums/RotasEnum'
+import { RotasEnum } from '@/types/enums/rotas-app-enum'
 import { MenuProps } from 'antd'
 
 type MenuItem = Required<MenuProps>['items'][number]

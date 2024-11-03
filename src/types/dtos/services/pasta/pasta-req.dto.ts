@@ -1,5 +1,5 @@
-import { EncontroReqDto } from '../encontro'
-import { EntidadeDto } from '@/types/dtos/EntidadeDto'
+import { EntidadeDto } from "../../entidade.dto"
+import { EncontroReqDto } from "../encontro"
 
 export interface PastaReqDto extends EntidadeDto {
 	equipe: string

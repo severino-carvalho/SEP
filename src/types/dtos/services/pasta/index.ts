@@ -1,2 +1,3 @@
-export * from './PastaReqDto'
-export * from './PastaResDto'
+export * from './pasta-req.dto'
+export * from './pasta-res.dto'
+
