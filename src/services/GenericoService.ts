@@ -1,8 +1,8 @@
+import { ServerApi } from '@/lib/axios/ServerAPI'
+import { EntidadeDto } from '@/types/dtos/EntidadeDto'
+import { FiltroResult } from '@/types/services/FiltroResult'
 import { IGenericoService } from '@/types/services/GenericoService'
 import { AxiosInstance } from 'axios'
-import { ServerApi } from '@/libs/axios/ServerAPI'
-import { FiltroResult } from '@/types/services/FiltroResult'
-import { EntidadeDto } from '@/types/dtos/EntidadeDto'
 
 export class GenericoService<S, R extends EntidadeDto>
 	implements IGenericoService<S, R>
@@ -27,7 +27,7 @@ export class GenericoService<S, R extends EntidadeDto>
 	}
 
 	async update(id: string, data: S): Promise<R> {
-		const { data: responseData } = await this.serverAPI.put<R>(this.url, data)
+		const { data: responseData } = await this.serverAPI.put<R>(`${this.url}/${id}`, data)
 		return responseData
 	}
 

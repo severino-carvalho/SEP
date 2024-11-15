@@ -17,7 +17,9 @@ export function Configuracoes() {
                 <BreadcrumbLink>Home</BreadcrumbLink>
               </Link>
             </BreadcrumbItem>
+
             <BreadcrumbSeparator />
+ 
             <BreadcrumbItem>
               <BreadcrumbPage>Configurações</BreadcrumbPage>
             </BreadcrumbItem>

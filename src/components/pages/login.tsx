@@ -10,13 +10,14 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useAuth } from "@/hooks/use-auth";
+import { RotasEnum } from "@/types/enums/RotasEnum";
 import { Navigate } from "react-router-dom";
 
 export function Login() {
   const { isAuthenticated, login } = useAuth();
 
   if (isAuthenticated) {
-    return <Navigate to="/" />;
+    return <Navigate to={RotasEnum.HOME} />;
   }
 
   return (
