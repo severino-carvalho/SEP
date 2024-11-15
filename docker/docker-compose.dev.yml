@@ -1,0 +1,15 @@
+services:
+  app:
+    container_name: sep-app-dev
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.prod
+    networks:
+      - sep-app-dev
+    ports:
+      - "5173:5173"
+    environment:
+      NODE_ENV: develop
+networks:
+  sep-app-dev:
+    driver: bridge
