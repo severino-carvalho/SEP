@@ -1,5 +1,5 @@
 import { ContainerPage } from "@/components/layouts/container-page";
-import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/shadcn/breadcrumb";
 import { UsuarioResDto } from "@/types/dtos/services/encontro/usuario-res.dto";
 import { RotasEnum } from "@/types/enums/rotas-app-enum";
 import { useQuery } from "@tanstack/react-query";

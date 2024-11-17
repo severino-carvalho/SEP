@@ -1,9 +1,9 @@
 import {
-	Breadcrumb,
-	BreadcrumbItem,
-	BreadcrumbList,
-	BreadcrumbPage
-} from '../ui/breadcrumb'
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbList,
+  BreadcrumbPage
+} from '../ui/shadcn/breadcrumb'
 
 export function Home() {
 	return (

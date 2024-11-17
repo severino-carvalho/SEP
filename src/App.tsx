@@ -9,28 +9,25 @@ import { Home } from './components/pages/home'
 import { Login } from './components/pages/login'
 import { ProtectedRoute } from './components/protect-router'
 import { Contexts } from './contexts'
-import { AuthProvider } from './contexts/auth-context'
 import { RotasEnum } from './types/enums/rotas-app-enum'
 
 export function App() {
 	return (
 		<BrowserRouter>
 			<Contexts>
-				<AuthProvider>
-					<Routes>
-						<Route path={RotasEnum.LOGIN} element={<Login />} />
-						<Route element={<ProtectedRoute />}>
-							<Route element={<AppLayout />}>
-								<Route path={RotasEnum.HOME} element={<Home />} />
-								<Route path={RotasEnum.SOBRE} element={<About />} />
-								<Route path={RotasEnum.CONFIGURACOES} element={<Configuracoes />} />
-								<Route path={RotasEnum.CONFIGURACOES_USUARIO} element={<Usuario />} />
-								<Route path={RotasEnum.CONFIGURACOES_ENCONTRO} element={<Encontro />} />
-								<Route path={RotasEnum.CONFIGURACOES_PASTA} element={<Pasta />} />
-							</Route>
+				<Routes>
+					<Route path={RotasEnum.LOGIN} element={<Login />} />
+					<Route element={<ProtectedRoute />}>
+						<Route element={<AppLayout />}>
+							<Route path={RotasEnum.HOME} element={<Home />} />
+							<Route path={RotasEnum.SOBRE} element={<About />} />
+							<Route path={RotasEnum.CONFIGURACOES} element={<Configuracoes />} />
+							<Route path={RotasEnum.CONFIGURACOES_USUARIO} element={<Usuario />} />
+							<Route path={RotasEnum.CONFIGURACOES_ENCONTRO} element={<Encontro />} />
+							<Route path={RotasEnum.CONFIGURACOES_PASTA} element={<Pasta />} />
 						</Route>
-					</Routes>
-				</AuthProvider>
+					</Route>
+				</Routes>
 			</Contexts>
 		</BrowserRouter>
 	)

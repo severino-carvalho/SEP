@@ -1,8 +1,8 @@
 import { RotasEnum } from "@/types/enums/rotas-app-enum";
 import { CalendarCog, FolderCog, UserRoundCog } from "lucide-react";
 import { Link } from "react-router-dom";
-import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "../../ui/breadcrumb";
-import { Card, CardContent, CardDescription, CardHeader } from "../../ui/card";
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "../../ui/shadcn/breadcrumb";
+import { Card, CardContent, CardDescription, CardHeader } from "../../ui/shadcn/card";
 
 export function Configuracoes() {
 
