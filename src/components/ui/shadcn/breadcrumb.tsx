@@ -4,13 +4,13 @@ import * as React from 'react'
 
 import { cn } from '@/lib/utils'
 
-const Breadcrumb = React.forwardRef<
+const BreadcrumbShadcn = React.forwardRef<
 	HTMLElement,
 	React.ComponentPropsWithoutRef<'nav'> & {
 		separator?: React.ReactNode
 	}
 >(({ ...props }, ref) => <nav ref={ref} aria-label='breadcrumb' {...props} />)
-Breadcrumb.displayName = 'Breadcrumb'
+BreadcrumbShadcn.displayName = 'Breadcrumb'
 
 const BreadcrumbList = React.forwardRef<
 	HTMLOListElement,
@@ -105,7 +105,8 @@ const BreadcrumbEllipsis = ({
 BreadcrumbEllipsis.displayName = 'BreadcrumbElipssis'
 
 export {
-	Breadcrumb, BreadcrumbEllipsis, BreadcrumbItem,
+	BreadcrumbEllipsis, BreadcrumbItem,
 	BreadcrumbLink, BreadcrumbList, BreadcrumbPage,
-	BreadcrumbSeparator
+	BreadcrumbSeparator, BreadcrumbShadcn as BreadcrumbShadcn
 }
+

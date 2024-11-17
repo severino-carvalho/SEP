@@ -1,20 +1,11 @@
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbList,
-  BreadcrumbPage
-} from '../ui/shadcn/breadcrumb'
+import { Breadcrumb, BreadcrumbListType } from '../ui/breadcrumb'
+
+const listaItensBreadcrumb: BreadcrumbListType[] = [{ titulo: "Home" }]
 
 export function Home() {
 	return (
 		<div className='flex flex-1 flex-col w-full gap-4'>
-			<Breadcrumb>
-				<BreadcrumbList>
-					<BreadcrumbItem>
-						<BreadcrumbPage>Home</BreadcrumbPage>
-					</BreadcrumbItem>
-				</BreadcrumbList>
-			</Breadcrumb>
+			<Breadcrumb listaItens={listaItensBreadcrumb} />
 
 			<div className='flex flex-1 gap-4'>
 				<div className='flex flex-col flex-1 gap-4 rounded-lg'>

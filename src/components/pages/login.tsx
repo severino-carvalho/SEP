@@ -16,9 +16,7 @@ import { Navigate } from "react-router-dom";
 export function Login() {
   const { isAuthenticated, login } = useAuth();
 
-  if (isAuthenticated) {
-    return <Navigate to={RotasEnum.HOME} />;
-  }
+  if (isAuthenticated) return <Navigate to={RotasEnum.HOME} />;
 
   return (
     <div className="flex justify-center items-center w-full min-h-screen">

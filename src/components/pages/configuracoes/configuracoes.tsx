@@ -1,29 +1,18 @@
+import { Breadcrumb, BreadcrumbListType } from "@/components/ui/breadcrumb";
 import { RotasEnum } from "@/types/enums/rotas-app-enum";
 import { CalendarCog, FolderCog, UserRoundCog } from "lucide-react";
 import { Link } from "react-router-dom";
-import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "../../ui/shadcn/breadcrumb";
 import { Card, CardContent, CardDescription, CardHeader } from "../../ui/shadcn/card";
 
+const listaItensBreadcrumb: BreadcrumbListType[] = [
+  { titulo: "Home", href: RotasEnum.HOME },
+  { titulo: "Configurações" },
+]
+
 export function Configuracoes() {
-
-
   return (
     <div className="flex flex-col w-full flex-1 gap-10">
-      <Breadcrumb>
-        <BreadcrumbList>
-          <BreadcrumbItem>
-            <Link to={RotasEnum.HOME}>
-              <BreadcrumbLink>Home</BreadcrumbLink>
-            </Link>
-          </BreadcrumbItem>
-
-          <BreadcrumbSeparator />
- 
-          <BreadcrumbItem>
-            <BreadcrumbPage>Configurações</BreadcrumbPage>
-          </BreadcrumbItem>
-        </BreadcrumbList>
-      </Breadcrumb>
+      <Breadcrumb listaItens={listaItensBreadcrumb} />
 
       <div className="flex flex-1 flex-col w-full gap-10">
         <div className="flex flex-col gap-2">
