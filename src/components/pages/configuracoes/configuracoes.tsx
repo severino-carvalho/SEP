@@ -1,8 +1,8 @@
-import { Breadcrumb, BreadcrumbListType } from "@/components/ui/breadcrumb";
+import { Breadcrumb, BreadcrumbListType } from "@/components/atoms/breadcrumb";
 import { RotasEnum } from "@/types/enums/rotas-app-enum";
 import { CalendarCog, FolderCog, UserRoundCog } from "lucide-react";
 import { Link } from "react-router-dom";
-import { Card, CardContent, CardDescription, CardHeader } from "../../ui/shadcn/card";
+import { Card, CardContent, CardDescription, CardHeader } from "../../ui/card";
 
 const listaItensBreadcrumb: BreadcrumbListType[] = [
   { titulo: "Home", href: RotasEnum.HOME },

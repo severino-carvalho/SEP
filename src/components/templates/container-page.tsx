@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils"
 import { ComponentProps } from "react"
-import { Breadcrumb, BreadcrumbListType } from "../ui/breadcrumb"
+import { Breadcrumb, BreadcrumbListType } from "../atoms/breadcrumb"
 
 type ContainerPageProps = ComponentProps<'div'> & {
   listaItensBreadcrumb: BreadcrumbListType[]

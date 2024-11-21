@@ -1,5 +1,5 @@
 import { AppSidebar } from '@/components/app-sidebar'
-import { SidebarProvider } from '@/components/ui/shadcn/sidebar'
+import { SidebarProvider } from '@/components/ui/sidebar'
 import { IChildren } from '@/types/components/IChildren'
 import { useState } from 'react'
 import { Outlet } from 'react-router-dom'

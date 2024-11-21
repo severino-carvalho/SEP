@@ -10,8 +10,9 @@ import {
 	SidebarMenuButton,
 	SidebarMenuItem,
 	SidebarTrigger
-} from '@/components/ui/shadcn/sidebar'
+} from '@/components/ui/sidebar'
 import { useAuth } from '@/hooks/use-auth'
+import { useTema } from '@/hooks/use-tema'
 import { RotasEnum } from '@/types/enums/rotas-app-enum'
 import { TooltipContent } from '@radix-ui/react-tooltip'
 import {
@@ -26,8 +27,8 @@ import {
 	DropdownMenuContent,
 	DropdownMenuItem,
 	DropdownMenuTrigger
-} from './ui/shadcn/dropdown-menu'
-import { Tooltip } from './ui/shadcn/tooltip'
+} from './ui/dropdown-menu'
+import { Tooltip } from './ui/tooltip'
 
 const items = [
 	{ title: 'Home', url: RotasEnum.HOME, icon: Home },
@@ -38,6 +39,7 @@ type AppSidebarProps = { open?: boolean }
 
 export function AppSidebar({ open }: Readonly<AppSidebarProps>) {
 	const { logout } = useAuth()
+	const { Tema, setTema } = useTema()
 
 	return (
 		<Sidebar collapsible='icon'>
@@ -94,8 +96,11 @@ export function AppSidebar({ open }: Readonly<AppSidebarProps>) {
 								<DropdownMenuItem>
 									<span>Account</span>
 								</DropdownMenuItem>
-								<DropdownMenuItem>
-									<span>Billing</span>
+								<DropdownMenuItem onClick={() => {
+									if (Tema === "dark" || Tema === "system") setTema("light")
+									else setTema("dark")
+								}}>
+									<span>Mudar tema</span>
 								</DropdownMenuItem>
 								<DropdownMenuItem className='hover:cursor-pointer' onClick={logout}>
 									<span>Sign out</span>

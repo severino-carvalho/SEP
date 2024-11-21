@@ -1,7 +1,7 @@
+import { BreadcrumbListType } from "@/components/atoms/breadcrumb";
 import { DataTable } from "@/components/data-table";
-import { ContainerPage } from "@/components/layouts/container-page";
-import { ListagemLayout } from "@/components/layouts/listagem-layout";
-import { BreadcrumbListType } from "@/components/ui/breadcrumb";
+import { ContainerPage } from "@/components/templates/container-page";
+import { ListagemLayout } from "@/components/templates/listagem-layout";
 import { PastaResDto } from "@/types/dtos/services/pasta";
 import { RotasEnum } from "@/types/enums/rotas-app-enum";
 import { useQuery } from "@tanstack/react-query";

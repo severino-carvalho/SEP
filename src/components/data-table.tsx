@@ -1,11 +1,11 @@
-import { Button } from "@/components/ui/shadcn/button"
+import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuTrigger
-} from "@/components/ui/shadcn/dropdown-menu"
-import { Input } from "@/components/ui/shadcn/input"
+} from "@/components/ui/dropdown-menu"
+import { Input } from "@/components/ui/input"
 import {
   Table,
   TableBody,
@@ -13,7 +13,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/shadcn/table"
+} from "@/components/ui/table"
 import { RotasEnum } from "@/types/enums/rotas-app-enum"
 import {
   ColumnDef,
