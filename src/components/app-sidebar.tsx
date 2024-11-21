@@ -1,42 +1,36 @@
 import {
-  Sidebar,
-  SidebarContent,
-  SidebarFooter,
-  SidebarGroup,
-  SidebarGroupContent,
-  SidebarGroupLabel,
-  SidebarHeader,
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
-  SidebarTrigger
+	Sidebar,
+	SidebarContent,
+	SidebarFooter,
+	SidebarGroup,
+	SidebarGroupContent,
+	SidebarGroupLabel,
+	SidebarHeader,
+	SidebarMenu,
+	SidebarMenuButton,
+	SidebarMenuItem,
+	SidebarTrigger
 } from '@/components/ui/shadcn/sidebar'
 import { useAuth } from '@/hooks/use-auth'
 import { RotasEnum } from '@/types/enums/rotas-app-enum'
 import { TooltipContent } from '@radix-ui/react-tooltip'
 import {
-  Calendar,
-  ChevronUp,
-  Home,
-  Inbox,
-  Search,
-  Settings,
-  User2
+	ChevronUp,
+	Home,
+	Settings,
+	User2
 } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger
+	DropdownMenu,
+	DropdownMenuContent,
+	DropdownMenuItem,
+	DropdownMenuTrigger
 } from './ui/shadcn/dropdown-menu'
 import { Tooltip } from './ui/shadcn/tooltip'
 
 const items = [
 	{ title: 'Home', url: RotasEnum.HOME, icon: Home },
-	{ title: 'Inbox', url: RotasEnum.SOBRE, icon: Inbox },
-	{ title: 'Calendar', url: RotasEnum.CONFIGURACOES, icon: Calendar },
-	{ title: 'Search', url: RotasEnum.CONFIGURACOES, icon: Search },
 	{ title: 'Settings', url: RotasEnum.CONFIGURACOES, icon: Settings }
 ]
 

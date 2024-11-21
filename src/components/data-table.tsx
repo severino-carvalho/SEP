@@ -162,13 +162,13 @@ import { Link } from "react-router-dom"
 //   },
 // ]
 
-
 export type DataTableProps<T> = {
   data?: T[]
   columns: ColumnDef<T>[]
+  href?: RotasEnum
 }
 
-export function DataTable<T>({ data, columns }: DataTableProps<T>) {
+export function DataTable<T>({ data, columns, ...props }: DataTableProps<T>) {
   const [sorting, setSorting] = useState<SortingState>([])
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
@@ -192,9 +192,9 @@ export function DataTable<T>({ data, columns }: DataTableProps<T>) {
     <div className="w-full">
       <div className="flex items-center py-4">
         <div className="flex gap-2.5 items-center">
-          <Link to={RotasEnum.CONFIGURACOES_USUARIO_MANUTENCAO}>
+          {props.href && <Link to={props.href}>
             <Button type="button">Adicionar</Button>
-          </Link>
+          </Link>}
 
           <Input
             placeholder="Filtrar por..."
@@ -294,7 +294,7 @@ export function DataTable<T>({ data, columns }: DataTableProps<T>) {
           {table.getFilteredSelectedRowModel().rows.length} de{" "}
           {table.getFilteredRowModel().rows.length} linhas selecionadas
         </div>
-        
+
         <div className="space-x-2">
           <Button
             variant="outline"
