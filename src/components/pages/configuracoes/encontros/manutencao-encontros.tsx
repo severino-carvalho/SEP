@@ -78,11 +78,14 @@ export function ManutencaoEncontros() {
                     </SelectTrigger>
                     <SelectContent>
                       {
-                        pastas?.map((pasta) => <SelectItem value={pasta.id}>Light</SelectItem>)
+                        pastas?.dados.map((pasta) => {
+                          return (
+                            <SelectItem value={String(pasta.id)}>
+                              {pasta.id}
+                            </SelectItem>
+                          )
+                        })
                       }
-                      <SelectItem value="light">Light</SelectItem>
-                      <SelectItem value="dark">Dark</SelectItem>
-                      <SelectItem value="system">System</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>

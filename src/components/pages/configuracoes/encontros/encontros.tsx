@@ -3,6 +3,7 @@ import { DataTable } from "@/components/data-table";
 import { ContainerPage } from "@/components/templates/container-page";
 import { ListagemLayout } from "@/components/templates/listagem-layout";
 import { EncontroResDto } from "@/types/dtos/services/encontro";
+import { RotasApiEnum } from "@/types/enums/rotas-api-enum";
 import { RotasEnum } from "@/types/enums/rotas-app-enum";
 import { useQuery } from "@tanstack/react-query";
 import { ColumnDef } from "@tanstack/react-table";
@@ -20,7 +21,7 @@ const colunasTabela: ColumnDef<EncontroResDto>[] = [
 
 export function Encontro() {
   const { data: dadosTabela } = useQuery({
-    queryKey: [""], queryFn: () => {
+    queryKey: [RotasApiEnum.ENCONTROS], queryFn: () => {
       return [] as EncontroResDto[]
     }
   })
