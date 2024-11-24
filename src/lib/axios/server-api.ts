@@ -1,7 +1,8 @@
+import { SEP_API_URL } from '@/types/envs'
 import axios, { AxiosInstance, CreateAxiosDefaults } from 'axios'
 
 const instanceAxiosOptions: CreateAxiosDefaults = {
-	baseURL: ''
+	baseURL: SEP_API_URL
 }
 
 const ServerAPI: AxiosInstance = axios.create(instanceAxiosOptions)

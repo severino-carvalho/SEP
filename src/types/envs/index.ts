@@ -1,2 +1,1 @@
-export const API_URL =
-	process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000'
+export const SEP_API_URL = import.meta.env.VITE_SEP_API_URL || 'http://localhost:3000'
