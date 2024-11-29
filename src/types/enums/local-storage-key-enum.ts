@@ -1,0 +1,3 @@
+export enum LOCAL_STORAGE_ENUM {
+  SEP_AUTH_TOKEN = "SEP-AUTH-TOKEN"
+}

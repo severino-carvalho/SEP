@@ -1,5 +1,4 @@
-import { EntidadeDto } from "../../entidade.dto"
 
-export interface LoginResDto extends EntidadeDto {
+export interface LoginResDto {
 	token: string
 }

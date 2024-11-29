@@ -1,8 +1,9 @@
+import { LoginReqDto } from "@/types/dtos/services/login";
 import { createContext } from "react";
 
 interface AuthContextType {
   isAuthenticated: boolean;
-  login: () => void;
+  login: (data: LoginReqDto) => Promise<void>;
   logout: () => void;
 }
 

@@ -1,6 +1,5 @@
-import { EntidadeDto } from "../../entidade.dto"
 
-export interface LoginReqDto extends EntidadeDto {
+export interface LoginReqDto {
 	email: string
 	senha: string
 }
