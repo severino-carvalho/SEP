@@ -1,4 +1,4 @@
-export enum RotasEnum {
+export enum RotasAppEnum {
 	HOME = '/',
 	LOGIN = '/login',
 	SOBRE = '/sobre',

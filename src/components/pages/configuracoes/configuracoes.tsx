@@ -1,11 +1,11 @@
 import { Breadcrumb, BreadcrumbListType } from "@/components/atoms/breadcrumb";
-import { RotasEnum } from "@/types/enums/rotas-app-enum";
+import { RotasAppEnum } from "@/types/enums/rotas-app-enum";
 import { CalendarCog, FolderCog, UserRoundCog } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Card, CardContent, CardDescription, CardHeader } from "../../ui/card";
 
 const listaItensBreadcrumb: BreadcrumbListType[] = [
-  { titulo: "Home", href: RotasEnum.HOME },
+  { titulo: "Home", href: RotasAppEnum.HOME },
   { titulo: "Configurações" },
 ]
 
@@ -20,8 +20,8 @@ export function Configuracoes() {
           <p className="text-base">Escolha uma das configuracoes para poder gerenciar</p>
         </div>
 
-        <section className="flex flex-wrap gap-10">
-          <Link to={RotasEnum.CONFIGURACOES_USUARIO} className="w-1/4 cursor-pointer">
+        <section className="flex gap-10">
+          <Link to={RotasAppEnum.CONFIGURACOES_USUARIO} className="w-2/3 lg:w-1/4 h-full cursor-pointer">
             <Card className="flex flex-col h-full hover:bg-sidebar">
               <CardHeader>
                 <UserRoundCog />
@@ -34,7 +34,7 @@ export function Configuracoes() {
             </Card>
           </Link>
 
-          <Link to={RotasEnum.CONFIGURACOES_ENCONTRO} className="w-1/4 cursor-pointer h-full">
+          <Link to={RotasAppEnum.CONFIGURACOES_ENCONTRO} className="w-2/3 lg:w-1/4 h-full cursor-pointer">
             <Card className="flex flex-col h-full hover:bg-sidebar">
               <CardHeader>
                 <CalendarCog />
@@ -47,7 +47,7 @@ export function Configuracoes() {
             </Card>
           </Link>
 
-          <Link to={RotasEnum.CONFIGURACOES_PASTA} className="w-1/4 cursor-pointer h-full">
+          <Link to={RotasAppEnum.CONFIGURACOES_PASTA} className="w-2/3 lg:w-1/4 h-full cursor-pointer">
             <Card className="flex flex-col h-full hover:bg-sidebar">
               <CardHeader>
                 <FolderCog />

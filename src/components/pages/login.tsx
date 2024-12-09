@@ -1,12 +1,13 @@
 import { useAuth } from "@/hooks/use-auth";
-import { RotasEnum } from "@/types/enums/rotas-app-enum";
+import { toastService } from "@/lib/useQuery/toast-service";
+import { RotasAppEnum } from "@/types/enums/rotas-app-enum";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Navigate } from "react-router-dom";
 import { z } from "zod";
-import { FormInput } from "../molecules/FormInput";
+import { FormInput } from "../molecules/form/form-input";
 import { Button } from "../ui/button";
 import { Form, FormField } from "../ui/form";
 
@@ -21,21 +22,40 @@ const formSchema = z.object({
 export function Login() {
   const { isAuthenticated, login } = useAuth();
 
-  if (isAuthenticated) return <Navigate to={RotasEnum.HOME} />;
+  if (isAuthenticated) return <Navigate to={RotasAppEnum.HOME} />;
 
   const [isFetchLogin, setIsFetchLogin] = useState(false)
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      email: "",
-      senha: ""
-    },
   })
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsFetchLogin(true)
-    await login(values).finally(() => setIsFetchLogin(false))
+    const toastId = toastService.loading("Carregando solicitação")
+
+    try {
+      await login(values).finally(() => setIsFetchLogin(false))
+
+      const dataAtual = new Date()
+      const mensagemLogin = mesagemBoasVindas(dataAtual)
+      toastService.update(toastId, {
+        render: mensagemLogin,
+        type: "success"
+      });
+    } catch (error) {
+
+    }
+  }
+
+  function mesagemBoasVindas(data: Date) {
+    if (data.getHours() <= 12) {
+      return "Bom dia, seja bem vindo!"
+    } else if (data.getHours() >= 12 && data.getHours() < 18) {
+      return "Boa tarde, seja bem vindo!"
+    } else {
+      return "Boa noite, seja bem vindo!"
+    }
   }
 
   return (
@@ -56,10 +76,11 @@ export function Login() {
               name="email"
               render={({ field }) => (
                 <FormInput
+                  {...field}
                   type="text"
                   label="Email"
                   placeholder="Insira o seu email"
-                  {...field}
+                  autoComplete="off"
                 />
               )}
             />
@@ -69,10 +90,10 @@ export function Login() {
               name="senha"
               render={({ field }) => (
                 <FormInput
-                  type="text"
+                  {...field}
+                  type="password"
                   label="Senha"
                   placeholder="Insira sua senha"
-                  {...field}
                 />
               )}
             />

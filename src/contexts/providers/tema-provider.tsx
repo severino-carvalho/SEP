@@ -1,4 +1,5 @@
 import { Tema } from "@/types/contexts/tema-type"
+import { LOCAL_STORAGE_ENUM } from "@/types/enums/local-storage-key-enum"
 import { useEffect, useState } from "react"
 import { TemaProviderContext } from "../tema-context"
 
@@ -11,7 +12,7 @@ type TemaProviderProps = {
 export function TemaProvider({
 	children,
 	defaultTema = 'system',
-	storageKey = 'sep-ui-tema',
+	storageKey = LOCAL_STORAGE_ENUM.SEP_UI_TEMA,
 	...props
 }: TemaProviderProps) {
 	const [Tema, setTema] = useState<Tema>(

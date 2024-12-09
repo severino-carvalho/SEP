@@ -1,12 +1,13 @@
 import { EntidadeDto } from '@/types/dtos/entidade.dto'
-import { FiltroResult } from '@/types/services/FiltroResult'
 
 export interface IGenericoService<S, R extends EntidadeDto> {
-	findAll(): Promise<FiltroResult<R>>
+	findAll(): Promise<R[]>
+
+	findById(id: number): Promise<R>
 
 	save(data: S): Promise<R>
 
-	update(id: string, data: S): Promise<R>
+	update(id: number, data: S): Promise<R>
 
-	delete(id: string): Promise<R>
+	delete(id: number): Promise<R>
 }

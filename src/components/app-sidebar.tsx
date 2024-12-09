@@ -13,7 +13,7 @@ import {
 } from '@/components/ui/sidebar'
 import { useAuth } from '@/hooks/use-auth'
 import { useTema } from '@/hooks/use-tema'
-import { RotasEnum } from '@/types/enums/rotas-app-enum'
+import { RotasAppEnum } from '@/types/enums/rotas-app-enum'
 import { TooltipContent } from '@radix-ui/react-tooltip'
 import {
 	ChevronUp,
@@ -31,8 +31,8 @@ import {
 import { Tooltip } from './ui/tooltip'
 
 const items = [
-	{ title: 'Home', url: RotasEnum.HOME, icon: Home },
-	{ title: 'Settings', url: RotasEnum.CONFIGURACOES, icon: Settings }
+	{ title: 'Home', url: RotasAppEnum.HOME, icon: Home },
+	{ title: 'Configurações', url: RotasAppEnum.CONFIGURACOES, icon: Settings }
 ]
 
 type AppSidebarProps = { open?: boolean }
@@ -88,22 +88,22 @@ export function AppSidebar({ open }: Readonly<AppSidebarProps>) {
 						<DropdownMenu>
 							<DropdownMenuTrigger asChild>
 								<SidebarMenuButton>
-									<User2 /> Username
+									<User2 /> Usuario
 									<ChevronUp className='ml-auto' />
 								</SidebarMenuButton>
 							</DropdownMenuTrigger>
 							<DropdownMenuContent side='top' className='w-[--radix-popper-anchor-width]'>
-								<DropdownMenuItem>
-									<span>Account</span>
+								<DropdownMenuItem disabled={true}>
+									<span>Conta</span>
 								</DropdownMenuItem>
-								<DropdownMenuItem onClick={() => {
+								<DropdownMenuItem className='hover:cursor-pointer' onClick={() => {
 									if (Tema === "dark" || Tema === "system") setTema("light")
 									else setTema("dark")
 								}}>
 									<span>Mudar tema</span>
 								</DropdownMenuItem>
 								<DropdownMenuItem className='hover:cursor-pointer' onClick={logout}>
-									<span>Sign out</span>
+									<span>Sair</span>
 								</DropdownMenuItem>
 							</DropdownMenuContent>
 						</DropdownMenu>

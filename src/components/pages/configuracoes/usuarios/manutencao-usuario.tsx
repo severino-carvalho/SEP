@@ -3,15 +3,15 @@ import { ContainerPage } from "@/components/templates/container-page";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { RotasEnum } from "@/types/enums/rotas-app-enum";
+import { RotasAppEnum } from "@/types/enums/rotas-app-enum";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 const listaItensBreadcrumb: BreadcrumbListType[] = [
-  { titulo: "Home", href: RotasEnum.HOME },
-  { titulo: "Configurações", href: RotasEnum.CONFIGURACOES },
-  { titulo: "Usuários", href: RotasEnum.CONFIGURACOES_USUARIO },
+  { titulo: "Home", href: RotasAppEnum.HOME },
+  { titulo: "Configurações", href: RotasAppEnum.CONFIGURACOES },
+  { titulo: "Usuários", href: RotasAppEnum.CONFIGURACOES_USUARIO },
   { titulo: "Manutenção de usuários" }
 ]
 

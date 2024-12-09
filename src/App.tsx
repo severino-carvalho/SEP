@@ -12,25 +12,25 @@ import { Login } from './components/pages/login'
 import { ProtectedRoute } from './components/protect-router'
 import AppLayout from './components/templates/app-layout'
 import { Contexts } from './contexts'
-import { RotasEnum } from './types/enums/rotas-app-enum'
+import { RotasAppEnum } from './types/enums/rotas-app-enum'
 
 export function App() {
 	return (
 		<BrowserRouter>
 			<Contexts>
 				<Routes>
-					<Route path={RotasEnum.LOGIN} element={<Login />} />
+					<Route path={RotasAppEnum.LOGIN} element={<Login />} />
 					<Route element={<ProtectedRoute />}>
 						<Route element={<AppLayout />}>
-							<Route path={RotasEnum.HOME} element={<Home />} />
-							<Route path={RotasEnum.SOBRE} element={<About />} />
-							<Route path={RotasEnum.CONFIGURACOES} element={<Configuracoes />} />
-							<Route path={RotasEnum.CONFIGURACOES_USUARIO} element={<Usuario />} />
-							<Route path={RotasEnum.CONFIGURACOES_USUARIO_MANUTENCAO} element={<ManutencaoUsuarios />} />
-							<Route path={RotasEnum.CONFIGURACOES_ENCONTRO} element={<Encontro />} />
-							<Route path={RotasEnum.CONFIGURACOES_ENCONTRO_MANUTENCAO} element={<ManutencaoEncontros />} />
-							<Route path={RotasEnum.CONFIGURACOES_PASTA} element={<Pasta />} />
-							<Route path={RotasEnum.CONFIGURACOES_PASTA_MANUTENCAO} element={<ManutencaoPastas />} />
+							<Route path={RotasAppEnum.HOME} element={<Home />} />
+							<Route path={RotasAppEnum.SOBRE} element={<About />} />
+							<Route path={RotasAppEnum.CONFIGURACOES} element={<Configuracoes />} />
+							<Route path={RotasAppEnum.CONFIGURACOES_USUARIO} element={<Usuario />} />
+							<Route path={RotasAppEnum.CONFIGURACOES_USUARIO_MANUTENCAO} element={<ManutencaoUsuarios />} />
+							<Route path={RotasAppEnum.CONFIGURACOES_ENCONTRO} element={<Encontro />} />
+							<Route path={RotasAppEnum.CONFIGURACOES_ENCONTRO_MANUTENCAO} element={<ManutencaoEncontros />} />
+							<Route path={RotasAppEnum.CONFIGURACOES_PASTA} element={<Pasta />} />
+							<Route path={RotasAppEnum.CONFIGURACOES_PASTA_MANUTENCAO} element={<ManutencaoPastas />} />
 						</Route>
 					</Route>
 				</Routes>

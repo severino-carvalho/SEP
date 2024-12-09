@@ -1,12 +1,12 @@
-import { RotasEnum } from "@/types/enums/rotas-app-enum";
+import { RotasAppEnum } from "@/types/enums/rotas-app-enum";
 import { useId } from "react";
 import { Link } from "react-router-dom";
 import { Fragment } from "react/jsx-runtime";
-import { BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator, BreadcrumbShadcn } from "../ui/breadcrumb";
+import { BreadcrumbItem, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator, BreadcrumbShadcn } from "../ui/breadcrumb";
 
 export type BreadcrumbListType = {
   titulo: string
-  href?: RotasEnum
+  href?: RotasAppEnum
 }
 
 type BreadcrumbType = {
@@ -20,10 +20,10 @@ export function Breadcrumb({ listaItens }: Readonly<BreadcrumbType>) {
         {listaItens.map(item => {
           if (!!item.href) {
             return (
-              <Fragment>
+              <Fragment key={item.href + useId()}>
                 <BreadcrumbItem key={item.href + useId()}>
-                  <Link to={item.href}>
-                    <BreadcrumbLink>{item.titulo}</BreadcrumbLink>
+                  <Link className="transition-colors hover:text-foreground" to={item.href}>
+                    {item.titulo}
                   </Link>
                 </BreadcrumbItem>
                 <BreadcrumbSeparator />
@@ -32,7 +32,7 @@ export function Breadcrumb({ listaItens }: Readonly<BreadcrumbType>) {
           }
 
           return (
-            <BreadcrumbItem>
+            <BreadcrumbItem key={item.href + useId()}>
               <BreadcrumbPage>{item.titulo}</BreadcrumbPage>
             </BreadcrumbItem>
           )

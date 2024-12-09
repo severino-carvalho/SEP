@@ -1,47 +1,105 @@
 import { BreadcrumbListType } from "@/components/atoms/breadcrumb";
-import { FormInput } from "@/components/molecules/FormInput";
+import { FormFooter } from "@/components/molecules/form/form-footer";
+import { FormInput } from "@/components/molecules/form/form-input";
 import { ContainerPage } from "@/components/templates/container-page";
-import { Button } from "@/components/ui/button";
 import { Form, FormField } from "@/components/ui/form";
-import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { pastaService } from "@/services/pasta.service";
-import { RotasEnum } from "@/types/enums/rotas-app-enum";
+import { toastService } from "@/lib/useQuery/toast-service";
+import { encontroService } from "@/services/encontro.service";
+import { RotasApiEnum } from "@/types/enums/rotas-api-enum";
+import { RotasAppEnum } from "@/types/enums/rotas-app-enum";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useQuery } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
+import { useLocation, useNavigate } from "react-router-dom";
 import { z } from "zod";
 
 const listaItensBreadcrumb: BreadcrumbListType[] = [
-  { titulo: "Home", href: RotasEnum.HOME },
-  { titulo: "Configurações", href: RotasEnum.CONFIGURACOES },
-  { titulo: "Encontros", href: RotasEnum.CONFIGURACOES_ENCONTRO },
+  { titulo: "Home", href: RotasAppEnum.HOME },
+  { titulo: "Configurações", href: RotasAppEnum.CONFIGURACOES },
+  { titulo: "Encontros", href: RotasAppEnum.CONFIGURACOES_ENCONTRO },
   { titulo: "Manutenção de encontro" }
 ]
 
-const formSchema = z.object({
+const encontroFormSchema = z.object({
+  id: z.coerce.number().optional(),
   nome: z.string()
     .min(1, { message: "Informe pelo menos 1 caractere" })
     .max(255, { message: "Limite de caracteres atingido" }),
-  pasta: z.string().optional()
 })
 
+type EncontroFormType = z.infer<typeof encontroFormSchema>;
+
 export function ManutencaoEncontros() {
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      nome: "",
-      pasta: undefined
-    },
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const encontroId = location.state?.id as number | undefined;
+
+  const form = useForm<z.infer<typeof encontroFormSchema>>({
+    resolver: zodResolver(encontroFormSchema),
   })
 
-  async function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values)
+  async function buscarDadosIniciais(encontroId?: number) {
+    if (!encontroId) return
+
+    try {
+      const encontro = await encontroService.findById(encontroId || 0)
+
+      form.reset(encontro)
+    } catch (error) {
+      toastService.erro("Erro ao buscar os dados iniciais");
+    }
   }
 
-  const { data: pastas } = useQuery({
-    queryKey: [],
-    queryFn: async () => await pastaService.findAll()
+  async function handleCriarEncontro(data: Omit<EncontroFormType, 'id'>) {
+    const toastId = toastService.loading("Cadastrando encontro")
+
+    try {
+      await encontroService.save(data)
+
+      navigate(RotasAppEnum.CONFIGURACOES_ENCONTRO)
+
+      toastService.update(toastId, {
+        render: "Sucesso ao criar encontro",
+        type: "success"
+      });
+    } catch (error) {
+      toastService.update(toastId, {
+        render: "Erro ao criar encontro",
+        type: "error"
+      });
+    }
+  }
+
+  async function handleEditarPasta({ id, ...data }: EncontroFormType) {
+    const toastId = toastService.loading("Atualizando encontro")
+
+    try {
+      await encontroService.update(id!, data)
+
+      navigate(RotasAppEnum.CONFIGURACOES_ENCONTRO)
+
+      toastService.update(toastId, {
+        type: "success",
+        render: "Sucesso ao atualizar encontro"
+      })
+    } catch (error) {
+      toastService.update(toastId, {
+        type: "error",
+        render: "Erro ao atualizar encontro"
+      })
+    }
+  }
+
+  async function onSubmit(data: z.infer<typeof encontroFormSchema>) {
+    if (data.id) return await handleEditarPasta(data)
+    return await handleCriarEncontro(data)
+  }
+
+  useQuery({
+    queryKey: [RotasApiEnum.ENCONTROS],
+    queryFn: async () => await buscarDadosIniciais(encontroId),
+    enabled: !!encontroId
   })
 
   return (
@@ -64,41 +122,13 @@ export function ManutencaoEncontros() {
                 />
               )}
             />
-
-            <FormField
-              control={form.control}
-              name="pasta"
-              render={({ field }) => (
-                <div className="flex flex-col gap-2.5">
-                  <Label>Pasta</Label>
-
-                  <Select value={field.value}>
-                    <SelectTrigger>
-                      <SelectValue placeholder={field.value} />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {
-                        pastas?.dados.map((pasta) => {
-                          return (
-                            <SelectItem value={String(pasta.id)}>
-                              {pasta.id}
-                            </SelectItem>
-                          )
-                        })
-                      }
-                    </SelectContent>
-                  </Select>
-                </div>
-              )}
-            />
           </section>
 
-          <section>
-            <span>{form.getValues("nome")}</span>
-            <span>{form.getValues("pasta") + ""}</span>
-          </section>
-
-          <Button type="submit">Submit</Button>
+          <FormFooter
+            isEdicao={!!encontroId}
+            href={RotasAppEnum.CONFIGURACOES_ENCONTRO}
+            isSubmitting={form.formState.isSubmitting}
+          />
         </form>
       </Form>
     </ContainerPage>

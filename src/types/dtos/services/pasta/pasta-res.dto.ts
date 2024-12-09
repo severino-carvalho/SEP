@@ -3,6 +3,6 @@ import { EncontroResDto } from '../encontro'
 
 export interface PastaResDto extends EntidadeDto {
 	equipe: string
-	arquivo: string
+	arquivoBase64?: string
 	encontro: EncontroResDto
 }

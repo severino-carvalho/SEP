@@ -1,4 +1,5 @@
 export enum RotasApiEnum {
   ENCONTROS = "/encontros",
-  PASTAS = "/pastas"
+  PASTAS = "/pastas",
+  USUARIOS = "/usuarios"
 }

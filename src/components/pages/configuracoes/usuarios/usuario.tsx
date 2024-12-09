@@ -2,14 +2,16 @@ import { BreadcrumbListType } from "@/components/atoms/breadcrumb";
 import { DataTable } from "@/components/data-table";
 import { ContainerPage } from "@/components/templates/container-page";
 import { ListagemLayout } from "@/components/templates/listagem-layout";
+import { usuarioService } from "@/services/usuario.service";
 import { UsuarioResDto } from "@/types/dtos/services/encontro/usuario-res.dto";
-import { RotasEnum } from "@/types/enums/rotas-app-enum";
+import { RotasApiEnum } from "@/types/enums/rotas-api-enum";
+import { RotasAppEnum } from "@/types/enums/rotas-app-enum";
 import { useQuery } from "@tanstack/react-query";
 import { ColumnDef } from "@tanstack/react-table";
 
 const listaItensBreadcrumb: BreadcrumbListType[] = [
-  { titulo: "Home", href: RotasEnum.HOME },
-  { titulo: "Configurações", href: RotasEnum.CONFIGURACOES },
+  { titulo: "Home", href: RotasAppEnum.HOME },
+  { titulo: "Configurações", href: RotasAppEnum.CONFIGURACOES },
   { titulo: "Usuários" }
 ]
 
@@ -20,9 +22,8 @@ const colunasTabela: ColumnDef<UsuarioResDto>[] = [
 
 export function Usuario() {
   const { data: dadosTabela } = useQuery({
-    queryKey: [""], queryFn: () => {
-      return [] as UsuarioResDto[]
-    }
+    queryKey: [RotasApiEnum.USUARIOS],
+    queryFn: async () => await usuarioService.findAll()
   })
 
   return (
@@ -31,7 +32,7 @@ export function Usuario() {
         <DataTable<UsuarioResDto>
           columns={colunasTabela}
           data={dadosTabela}
-          href={RotasEnum.CONFIGURACOES_USUARIO_MANUTENCAO}
+          href={RotasAppEnum.CONFIGURACOES_USUARIO_MANUTENCAO}
         />
       </ListagemLayout>
     </ContainerPage>
