@@ -2,7 +2,7 @@ import { BreadcrumbListType } from "@/components/atoms/breadcrumb";
 import { DataTable } from "@/components/data-table";
 import { ContainerPage } from "@/components/templates/container-page";
 import { ListagemLayout } from "@/components/templates/listagem-layout";
-import { usuarioService } from "@/services/usuario.service";
+import { usuarioService } from "@/services/usuario-service";
 import { UsuarioResDto } from "@/types/dtos/services/encontro/usuario-res.dto";
 import { RotasApiEnum } from "@/types/enums/rotas-api-enum";
 import { RotasAppEnum } from "@/types/enums/rotas-app-enum";

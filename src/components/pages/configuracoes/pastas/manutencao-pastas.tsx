@@ -5,8 +5,8 @@ import { FormSelect, SelectOption } from "@/components/molecules/form/form-selec
 import { ContainerPage } from "@/components/templates/container-page";
 import { Form, FormField } from "@/components/ui/form";
 import { toastService } from "@/lib/useQuery/toast-service";
-import { encontroService } from "@/services/encontro.service";
-import { pastaService } from "@/services/pasta.service";
+import { encontroService } from "@/services/encontro-service";
+import { pastaService } from "@/services/pasta-service";
 import { EncontroResDto } from "@/types/dtos/services/encontro";
 import { RotasApiEnum } from "@/types/enums/rotas-api-enum";
 import { RotasAppEnum } from "@/types/enums/rotas-app-enum";
