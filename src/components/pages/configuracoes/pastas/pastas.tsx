@@ -4,7 +4,7 @@ import { Acoes } from "@/components/molecules/tabela/acoes";
 import { ContainerPage } from "@/components/templates/container-page";
 import { ListagemLayout } from "@/components/templates/listagem-layout";
 import { queryClient } from "@/lib/useQuery/query-client";
-import { pastaService } from "@/services/pasta.service";
+import { pastaService } from "@/services/pasta-service";
 import { PastaResDto } from "@/types/dtos/services/pasta";
 import { RotasApiEnum } from "@/types/enums/rotas-api-enum";
 import { RotasAppEnum } from "@/types/enums/rotas-app-enum";

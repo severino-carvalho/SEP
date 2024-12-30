@@ -1,5 +1,6 @@
 import { FormControl, FormDescription, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { useEffect, useState } from "react";
 import { ControllerRenderProps } from "react-hook-form";
 
 export type SelectOption = {
@@ -16,16 +17,26 @@ interface FormSelectProps {
 }
 
 export function FormSelect(props: FormSelectProps) {
+  const [valorSelecionado, setValorSelecionado] = useState<string>(
+    props.field.value?.toString()
+  )
+
   function onValueChange(opcao: string) {
     props.field.onChange(opcao)
   }
+
+  useEffect(() => { 
+    console.log(props.field.value)
+    onValueChange(props.field.value)
+    setValorSelecionado(props.field.value)
+  }, [props.field.value])
 
   return (
     <FormItem>
       <FormLabel>{props.label}</FormLabel>
       <Select
         onValueChange={onValueChange}
-        defaultValue={props.field.value}
+        defaultValue={valorSelecionado}
       >
         <FormControl>
           <SelectTrigger>
