@@ -35,7 +35,7 @@ export function Login() {
     const toastId = toastService.loading("Carregando solicitação")
 
     try {
-      await login(values).finally(() => setIsFetchLogin(false))
+      await login(values)
 
       const dataAtual = new Date()
       const mensagemLogin = mesagemBoasVindas(dataAtual)
@@ -44,7 +44,12 @@ export function Login() {
         type: "success"
       });
     } catch (error) {
-
+      toastService.update(toastId, {
+        render: "Erro ao realizar login",
+        type: "error"
+      });
+    } finally {
+      setIsFetchLogin(false)
     }
   }
 
