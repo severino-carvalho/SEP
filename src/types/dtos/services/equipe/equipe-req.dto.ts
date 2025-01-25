@@ -1,7 +1,7 @@
 import { EntidadeDto } from "../../entidade.dto"
 
-export interface PastaReqDto extends Partial<EntidadeDto> {
+export interface EquipeReqDto extends Partial<EntidadeDto> {
 	equipe: string
-	arquivoBase64?: string
+	arquivo?: File
 	encontroId: number
 }

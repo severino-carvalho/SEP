@@ -1,7 +1,7 @@
 import { EntidadeDto } from '@/types/dtos/entidade.dto'
-import { PastaResDto } from '../pasta'
+import { EquipeResDto } from '../equipe'
 
 export interface EncontroResDto extends EntidadeDto {
 	nome: string
-	pastas: PastaResDto[]
+	equipes: EquipeResDto[]
 }

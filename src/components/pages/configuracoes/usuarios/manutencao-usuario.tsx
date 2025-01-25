@@ -27,9 +27,7 @@ export function ManutencaoUsuarios() {
     },
   })
 
-  async function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values)
-  }
+  async function onSubmit(values: z.infer<typeof formSchema>) { }
 
   return (
     <ContainerPage className="gap-10" listaItensBreadcrumb={listaItensBreadcrumb}>

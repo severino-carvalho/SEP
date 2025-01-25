@@ -20,8 +20,8 @@ export function Configuracoes() {
           <p className="text-base">Escolha uma das configuracoes para poder gerenciar</p>
         </div>
 
-        <section className="flex gap-10">
-          <Link to={RotasAppEnum.CONFIGURACOES_USUARIO} className="w-2/3 lg:w-1/4 h-full cursor-pointer">
+        <section className="flex gap-5 lg:gap-10 flex-wrap w-full">
+          <Link to={RotasAppEnum.CONFIGURACOES_USUARIO} className="w-full lg:w-1/4 h-full cursor-pointer">
             <Card className="flex flex-col h-full hover:bg-sidebar">
               <CardHeader>
                 <UserRoundCog />
@@ -34,7 +34,7 @@ export function Configuracoes() {
             </Card>
           </Link>
 
-          <Link to={RotasAppEnum.CONFIGURACOES_ENCONTRO} className="w-2/3 lg:w-1/4 h-full cursor-pointer">
+          <Link to={RotasAppEnum.CONFIGURACOES_ENCONTRO} className="w-1/3 lg:w-1/4 h-full cursor-pointer">
             <Card className="flex flex-col h-full hover:bg-sidebar">
               <CardHeader>
                 <CalendarCog />
@@ -47,14 +47,14 @@ export function Configuracoes() {
             </Card>
           </Link>
 
-          <Link to={RotasAppEnum.CONFIGURACOES_PASTA} className="w-2/3 lg:w-1/4 h-full cursor-pointer">
+          <Link to={RotasAppEnum.CONFIGURACOES_EQUIPE} className="w-1/3 lg:w-1/4 h-full cursor-pointer">
             <Card className="flex flex-col h-full hover:bg-sidebar">
               <CardHeader>
                 <FolderCog />
               </CardHeader>
 
               <CardContent>
-                <span className="text-gray-200">Pastas</span>
+                <span className="text-gray-200">Equipes</span>
                 <CardDescription>Ab, tempora id! Reprehenderit mollitia atque officiis? Sequi, odit nesciunt</CardDescription>
               </CardContent>
             </Card>

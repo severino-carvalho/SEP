@@ -1,51 +1,53 @@
 import { Button } from "@/components/ui/button"
 import {
-    DropdownMenu,
-    DropdownMenuCheckboxItem,
-    DropdownMenuContent,
-    DropdownMenuTrigger
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu"
 import { Input } from "@/components/ui/input"
 import {
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
 } from "@/components/ui/table"
 import { RotasAppEnum } from "@/types/enums/rotas-app-enum"
 import {
-    ColumnDef,
-    ColumnFiltersState,
-    SortingState,
-    VisibilityState,
-    flexRender,
-    getCoreRowModel,
-    getFilteredRowModel,
-    getPaginationRowModel,
-    getSortedRowModel,
-    useReactTable,
+  ColumnDef,
+  ColumnFiltersState,
+  SortingState,
+  VisibilityState,
+  flexRender,
+  getCoreRowModel,
+  getFilteredRowModel,
+  getPaginationRowModel,
+  getSortedRowModel,
+  useReactTable
 } from "@tanstack/react-table"
-import { ChevronDown, FolderX } from "lucide-react"
+import { ChevronDown, FolderX, Loader2 } from "lucide-react"
 import { useState } from "react"
 import { Link } from "react-router-dom"
 
 export type DataTableProps<T> = {
-  data?: T[]
   columns: ColumnDef<T>[]
+
+  data?: T[]
   href?: RotasAppEnum
+  isFetching?: boolean
 }
 
-export function DataTable<T>({ data, columns, ...props }: DataTableProps<T>) {
+export function DataTable<T>({ isFetching = false, ...props }: Readonly<DataTableProps<T>>) {
   const [sorting, setSorting] = useState<SortingState>([])
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
   const [rowSelection, setRowSelection] = useState({})
 
   const table = useReactTable({
-    data: data ?? [],
-    columns,
+    data: props.data ?? [],
+    columns: props.columns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
     getCoreRowModel: getCoreRowModel(),
@@ -123,8 +125,25 @@ export function DataTable<T>({ data, columns, ...props }: DataTableProps<T>) {
               </TableRow>
             ))}
           </TableHeader>
+
           <TableBody>
-            {table.getRowModel().rows?.length ? (
+            {isFetching && <Loading />}
+
+            {!isFetching && table.getRowCount() === 0 && (
+              <TableRow>
+                <TableCell
+                  colSpan={props.columns.length}
+                  className="text-center"
+                >
+                  <div className="flex flex-1 gap-2.5 items-center flex-col w-full">
+                    <FolderX size={48} strokeWidth={1.5} />
+                    <span>Sem resultados</span>
+                  </div>
+                </TableCell>
+              </TableRow>
+            )}
+
+            {table.getRowCount() !== 0 && (
               table.getRowModel().rows.map((row) => (
                 <TableRow
                   key={row.id}
@@ -140,18 +159,6 @@ export function DataTable<T>({ data, columns, ...props }: DataTableProps<T>) {
                   ))}
                 </TableRow>
               ))
-            ) : (
-              <TableRow>
-                <TableCell
-                  colSpan={columns.length}
-                  className="text-center"
-                >
-                  <div className="flex flex-1 gap-2.5 items-center flex-col w-full">
-                    <FolderX size={48} strokeWidth={1.5} />
-                    <span>Sem resultados</span>
-                  </div>
-                </TableCell>
-              </TableRow>
             )}
           </TableBody>
         </Table>
@@ -181,6 +188,14 @@ export function DataTable<T>({ data, columns, ...props }: DataTableProps<T>) {
           </Button>
         </div>
       </div>
+    </div>
+  )
+}
+
+function Loading() {
+  return (
+    <div className="flex flex-col items-center justify-center w-full h-96">
+      <Loader2 className="animate-spin" size={48} strokeWidth={1.5} />
     </div>
   )
 }

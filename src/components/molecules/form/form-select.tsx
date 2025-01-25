@@ -26,7 +26,6 @@ export function FormSelect(props: FormSelectProps) {
   }
 
   useEffect(() => { 
-    console.log(props.field.value)
     onValueChange(props.field.value)
     setValorSelecionado(props.field.value)
   }, [props.field.value])

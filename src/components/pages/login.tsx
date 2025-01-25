@@ -21,14 +21,13 @@ const formSchema = z.object({
 
 export function Login() {
   const { isAuthenticated, login } = useAuth();
-
-  if (isAuthenticated) return <Navigate to={RotasAppEnum.HOME} />;
-
-  const [isFetchLogin, setIsFetchLogin] = useState(false)
+  const [isFetchLogin, setIsFetchLogin] = useState<boolean>(false)
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
   })
+
+  if (isAuthenticated) return <Navigate to={RotasAppEnum.HOME} />;
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsFetchLogin(true)

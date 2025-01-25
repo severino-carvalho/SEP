@@ -43,6 +43,8 @@
 	},
 	"devDependencies": {
 		"@eslint/js": "^9.13.0",
+		"@hookform/devtools": "^4.3.3",
+		"@tanstack/react-query-devtools": "^5.62.11",
 		"@types/jwt-decode": "^3.1.0",
 		"@types/node": "^22.8.2",
 		"@types/react": "^18.3.11",
