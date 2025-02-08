@@ -35,7 +35,7 @@ export function Equipe() {
     },
     onSuccess: (...{ "2": { toastId } }) => {
       queryClient.invalidateQueries({ queryKey: [RotasApiEnum.EQUIPE] })
-      toastService.update(toastId, { render: "Sucesso ao criar equipe", type: "success" })
+      toastService.update(toastId, { render: "Sucesso ao remover equipe", type: "success" })
     },
     onError: (...{ "2": context }) => {
       toastService.update(context?.toastId ?? "", { render: "Erro ao remover equipe", type: "error" })
@@ -45,7 +45,7 @@ export function Equipe() {
   const colunasTabela: ColumnDef<EquipeResDto>[] = [
     { accessorKey: "equipe", header: "Nome" },
     {
-      accessorKey: "arquivo",
+      accessorKey: "pasta",
       header: "Arquivo",
       cell: (info) => info.getValue() ? "Sim" : "Não"
     },

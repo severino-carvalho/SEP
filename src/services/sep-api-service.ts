@@ -1,4 +1,4 @@
-import { serverApi } from '@/lib/axios/server-api';
+import { ServerApi } from '@/lib/axios/server-api';
 import { EntidadeDto } from '@/types/dtos/entidade.dto';
 import { IGenericoService } from '@/types/services/GenericoService';
 
@@ -6,7 +6,7 @@ export class SEPApiService<S, R extends EntidadeDto> implements IGenericoService
 	protected readonly serverAPI;
 
 	constructor(protected readonly url: string) {
-		this.serverAPI = serverApi
+		this.serverAPI = ServerApi
 	}
 
 	async findAll(): Promise<R[]> {

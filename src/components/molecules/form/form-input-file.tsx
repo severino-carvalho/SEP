@@ -6,9 +6,8 @@ import { Input } from "../../ui/input";
 interface FormInputProps extends ComponentProps<'input'> {
   label?: string;
   descricao?: string;
-  field?: ControllerRenderProps<never>;
+  field?: ControllerRenderProps<any>;
 }
-
 
 export const FormInputFile = forwardRef<HTMLInputElement, FormInputProps>(
   ({ descricao, field, label, value, ...props }, ref) => {

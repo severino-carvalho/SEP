@@ -35,4 +35,4 @@ ServerAPI.interceptors.response.use(
 	}
 )
 
-export const serverApi = ServerAPI
+export const ServerApi = ServerAPI

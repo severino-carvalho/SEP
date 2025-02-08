@@ -67,7 +67,7 @@ export function Login() {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="w-5/12 border border-neutral-800 p-5 rounded-md space-y-8"
+          className="xl:w-4/12 lg:w-5/12 md:w-7/12 border border-neutral-800 p-5 rounded-md space-y-8"
         >
           <div className="flex flex-1 flex-col gap-1">
             <h1 className="text-3xl">Entrar</h1>

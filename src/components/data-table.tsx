@@ -28,7 +28,7 @@ import {
   useReactTable
 } from "@tanstack/react-table"
 import { ChevronDown, FolderX, Loader2 } from "lucide-react"
-import { useState } from "react"
+import { Fragment, useState } from "react"
 import { Link } from "react-router-dom"
 
 export type DataTableProps<T> = {
@@ -107,60 +107,66 @@ export function DataTable<T>({ isFetching = false, ...props }: Readonly<DataTabl
 
       <div className="rounded-md border">
         <Table>
-          <TableHeader>
-            {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map((header) => {
-                  return (
-                    <TableHead key={header.id}>
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
-                    </TableHead>
-                  )
-                })}
-              </TableRow>
-            ))}
-          </TableHeader>
+          {isFetching && <div className="w-full">
+            <Loading />
+          </div>}
 
-          <TableBody>
-            {isFetching && <Loading />}
+          {!isFetching && (
+            <Fragment>
+              <TableHeader>
+                {table.getHeaderGroups().map((headerGroup) => (
+                  <TableRow key={headerGroup.id}>
+                    {headerGroup.headers.map((header) => {
+                      return (
+                        <TableHead key={header.id}>
+                          {header.isPlaceholder
+                            ? null
+                            : flexRender(
+                              header.column.columnDef.header,
+                              header.getContext()
+                            )}
+                        </TableHead>
+                      )
+                    })}
+                  </TableRow>
+                ))}
+              </TableHeader>
 
-            {!isFetching && table.getRowCount() === 0 && (
-              <TableRow>
-                <TableCell
-                  colSpan={props.columns.length}
-                  className="text-center"
-                >
-                  <div className="flex flex-1 gap-2.5 items-center flex-col w-full">
-                    <FolderX size={48} strokeWidth={1.5} />
-                    <span>Sem resultados</span>
-                  </div>
-                </TableCell>
-              </TableRow>
-            )}
-
-            {table.getRowCount() !== 0 && (
-              table.getRowModel().rows.map((row) => (
-                <TableRow
-                  key={row.id}
-                  data-state={row.getIsSelected() && "selected"}
-                >
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
+              <TableBody>
+                {table.getRowCount() === 0 && (
+                  <TableRow>
+                    <TableCell
+                      colSpan={props.columns.length}
+                      className="text-center"
+                    >
+                      <div className="flex flex-1 gap-2.5 items-center flex-col w-full">
+                        <FolderX size={48} strokeWidth={1.5} />
+                        <span>Sem resultados</span>
+                      </div>
                     </TableCell>
-                  ))}
-                </TableRow>
-              ))
-            )}
-          </TableBody>
+                  </TableRow>
+                )}
+
+                {table.getRowCount() !== 0 && (
+                  table.getRowModel().rows.map((row) => (
+                    <TableRow
+                      key={row.id}
+                      data-state={row.getIsSelected() && "selected"}
+                    >
+                      {row.getVisibleCells().map((cell) => (
+                        <TableCell key={cell.id}>
+                          {flexRender(
+                            cell.column.columnDef.cell,
+                            cell.getContext()
+                          )}
+                        </TableCell>
+                      ))}
+                    </TableRow>
+                  ))
+                )}
+              </TableBody>
+            </Fragment>
+          )}
         </Table>
       </div>
 

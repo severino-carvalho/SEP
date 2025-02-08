@@ -5,6 +5,7 @@ import { FormInputFile } from "@/components/molecules/form/form-input-file"
 import { FormSelect } from "@/components/molecules/form/form-select"
 import { ContainerPage } from "@/components/templates/container-page"
 import { Form, FormField } from "@/components/ui/form"
+import { equipeMapper } from "@/lib/mappers/equipe.mapper"
 import { queryClient } from "@/lib/useQuery/query-client"
 import { toastService } from "@/lib/useQuery/toast-service"
 import { validarFormatoArquivo } from "@/lib/utils"
@@ -28,7 +29,7 @@ const listaItensBreadcrumb: BreadcrumbListType[] = [
   { titulo: "Manutenção de equipes" }
 ]
 
-const formatoArquivosPermitidos = ["pdf", "doc"]
+const formatoArquivosPermitidos = ["pdf", "doc", "docx"]
 
 export const equipeFormSchema = z.object({
   id: z.coerce.number().optional(),
@@ -54,13 +55,16 @@ export function ManutencaoEquipes() {
 
   const form = useForm<EquipeFormType>({ resolver: zodResolver(equipeFormSchema) })
 
-  async function buscarDadosIniciais(equipeId?: number) {
+  async function fetchDadosIniciais(equipeId?: number) {
     if (!equipeId) return
 
     try {
-      const equipe = await equipeService.findById(equipeId || 0)
+      const equipe = await equipeService.findById(equipeId)
+      const equipeForm = equipeMapper.to(equipe)
 
-      form.reset(equipe)
+      console.log(equipeForm)
+
+      form.reset(equipeForm)
     } catch (error) {
       toastService.erro("Erro ao buscar os dados iniciais")
     }
@@ -68,7 +72,9 @@ export function ManutencaoEquipes() {
 
   const criarEquipeMutation = useMutation({
     mutationKey: [RotasApiEnum.EQUIPE],
-    mutationFn: equipeService.save,
+    mutationFn: async function (data: EquipeFormType) {
+      return await equipeService.save(data)
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [RotasApiEnum.EQUIPE] })
       navigate(RotasAppEnum.CONFIGURACOES_EQUIPE)
@@ -79,7 +85,9 @@ export function ManutencaoEquipes() {
 
   const editarEquipeMutation = useMutation({
     mutationKey: [RotasApiEnum.EQUIPE, equipeId],
-    mutationFn: ({ id, ...data }: EquipeFormType) => equipeService.update(id!, data),
+    mutationFn: async function (data: EquipeFormType) {
+      return await equipeService.update(data.id!, data)
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [RotasApiEnum.EQUIPE] })
       navigate(RotasAppEnum.CONFIGURACOES_EQUIPE)
@@ -102,7 +110,7 @@ export function ManutencaoEquipes() {
 
   useQuery({
     queryKey: [RotasApiEnum.EQUIPE],
-    queryFn: async () => await buscarDadosIniciais(equipeId),
+    queryFn: async () => await fetchDadosIniciais(equipeId),
     enabled: !!equipeId
   })
 
@@ -138,6 +146,7 @@ export function ManutencaoEquipes() {
               render={({ field }) => (
                 <FormInputFile
                   label="Arquivo"
+                  field={field}
                   onChange={(e) => field.onChange(e.target.files && e.target.files[0])}
                 />
               )}
