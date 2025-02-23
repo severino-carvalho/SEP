@@ -1,6 +1,6 @@
 import { Tema } from "@/types/contexts/tema-type"
 import { LOCAL_STORAGE_ENUM } from "@/types/enums/local-storage-key-enum"
-import { useEffect, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { TemaProviderContext } from "../tema-context"
 
 type TemaProviderProps = {
@@ -14,7 +14,7 @@ export function TemaProvider({
 	defaultTema = 'system',
 	storageKey = LOCAL_STORAGE_ENUM.SEP_UI_TEMA,
 	...props
-}: TemaProviderProps) {
+}: Readonly<TemaProviderProps>) {
 	const [Tema, setTema] = useState<Tema>(
 		() => (localStorage.getItem(storageKey) as Tema) || defaultTema
 	)
@@ -24,8 +24,9 @@ export function TemaProvider({
 		root.classList.remove('light', 'dark')
 
 		if (Tema === 'system') {
-			const systemTema =
-				window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+			const systemTema = window
+				.matchMedia('(prefers-color-scheme: dark)')
+				.matches ? 'dark' : 'light'
 
 			root.classList.add(systemTema)
 			return
@@ -34,16 +35,18 @@ export function TemaProvider({
 		root.classList.add(Tema)
 	}, [Tema])
 
-	const value = {
-		Tema,
-		setTema: (Tema: Tema) => {
-			localStorage.setItem(storageKey, Tema)
-			setTema(Tema)
+	const temaContextValue = useMemo(() => {
+		return {
+			Tema,
+			setTema: (tema: Tema) => {
+				localStorage.setItem(storageKey, tema)
+				setTema(tema)
+			}
 		}
-	}
+	}, [Tema, storageKey])
 
 	return (
-		<TemaProviderContext.Provider {...props} value={value}>
+		<TemaProviderContext.Provider {...props} value={temaContextValue}>
 			{children}
 		</TemaProviderContext.Provider>
 	)

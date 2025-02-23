@@ -1,6 +1,7 @@
 import { queryClient } from '@/lib/useQuery/query-client'
 import { IChildren } from '@/types/components/IChildren'
 import { LOCAL_STORAGE_ENUM } from '@/types/enums/local-storage-key-enum'
+import { SEP_ENVIRONMENT } from '@/types/envs'
 import { QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { AuthProvider } from './providers/auth-provider'
@@ -18,7 +19,7 @@ export function Contexts({ children }: Readonly<IChildren>) {
 				</TemaProvider>
 			</AuthProvider>
 
-			<ReactQueryDevtools initialIsOpen={false} />
+			{SEP_ENVIRONMENT === 'development' && <ReactQueryDevtools initialIsOpen={false} />}
 		</QueryClientProvider>
 	)
 }

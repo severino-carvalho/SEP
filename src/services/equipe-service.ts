@@ -15,6 +15,16 @@ class EquipeService extends SEPApiService<EquipeReqDto, EquipeResDto> {
     const { data: responseData } = await this.serverAPI.put<EquipeResDto>(`${this.url}/${id}`, data, { ...options })
     return responseData
   }
+
+  public async deletePasta(equiepid: number, pastaId: number) {
+    const { data: responseData } = await this.serverAPI.delete<EquipeResDto>(`${this.url}/${equiepid}/${pastaId}`)
+    return responseData
+  }
+
+  public async downloadPasta(pastaId: number) {
+    const { data: responseData } = await this.serverAPI.get<Blob>(`${this.url}/pasta/${pastaId}`, { responseType: 'blob' })
+    return responseData
+  }
 }
 
 export const equipeService = new EquipeService(RotasApiEnum.EQUIPE)

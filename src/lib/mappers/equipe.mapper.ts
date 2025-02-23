@@ -3,8 +3,8 @@
 import { EquipeReqDto, EquipeResDto } from "@/types/dtos/services/equipe";
 import { PastaResDto } from "@/types/dtos/services/pasta/pasta-res.dto";
 
-function transformarPasta(pasta?: PastaResDto): File {
-  if (!pasta) return new File([], "")
+function transformarPasta(pasta?: PastaResDto): File | undefined {
+  if (!pasta) return
 
   return new File([pasta.arquivo], pasta.nomeArquivo, { type: pasta.contentType })
 }

@@ -30,7 +30,6 @@ export class SEPApiService<S, R extends EntidadeDto> implements IGenericoService
 	}
 
 	async delete(id: number): Promise<R> {
-		debugger
 		const { data: responseData } = await this.serverAPI.delete<R>(`${this.url}/${id}`)
 		return responseData
 	}

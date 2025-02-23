@@ -107,27 +107,18 @@ export function DataTable<T>({ isFetching = false, ...props }: Readonly<DataTabl
 
       <div className="rounded-md border">
         <Table>
-          {isFetching && <div className="w-full">
+          {isFetching && (<div className="w-full">
             <Loading />
-          </div>}
+          </div>)}
 
           {!isFetching && (
             <Fragment>
               <TableHeader>
                 {table.getHeaderGroups().map((headerGroup) => (
                   <TableRow key={headerGroup.id}>
-                    {headerGroup.headers.map((header) => {
-                      return (
-                        <TableHead key={header.id}>
-                          {header.isPlaceholder
-                            ? null
-                            : flexRender(
-                              header.column.columnDef.header,
-                              header.getContext()
-                            )}
-                        </TableHead>
-                      )
-                    })}
+                    {headerGroup.headers.map((header) => (<TableHead key={header.id}>
+                      {!header.isPlaceholder && flexRender(header.column.columnDef.header, header.getContext())}
+                    </TableHead>))}
                   </TableRow>
                 ))}
               </TableHeader>
@@ -154,7 +145,10 @@ export function DataTable<T>({ isFetching = false, ...props }: Readonly<DataTabl
                       data-state={row.getIsSelected() && "selected"}
                     >
                       {row.getVisibleCells().map((cell) => (
-                        <TableCell key={cell.id}>
+                        <TableCell
+                          key={cell.id}
+                          className="w-full"
+                        >
                           {flexRender(
                             cell.column.columnDef.cell,
                             cell.getContext()
@@ -178,7 +172,6 @@ export function DataTable<T>({ isFetching = false, ...props }: Readonly<DataTabl
         <div className="space-x-2">
           <Button
             variant="outline"
-            size="sm"
             onClick={() => table.previousPage()}
             disabled={!table.getCanPreviousPage()}
           >
@@ -186,7 +179,6 @@ export function DataTable<T>({ isFetching = false, ...props }: Readonly<DataTabl
           </Button>
           <Button
             variant="outline"
-            size="sm"
             onClick={() => table.nextPage()}
             disabled={!table.getCanNextPage()}
           >
