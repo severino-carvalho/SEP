@@ -20,19 +20,19 @@ class ToastService {
   }
 
   sucesso<TData = unknown>(content: ToastContent<TData>, options?: ToastOptions<TData>): Id {
-    return this.showToast("success", content, options);
+    return this.showToast("success", content, { ...this.defaultOptions, ...options });
   }
 
   erro<TData = unknown>(content: ToastContent<TData>, options?: ToastOptions<TData>): Id {
-    return this.showToast("error", content, options);
+    return this.showToast("error", content, { ...this.defaultOptions, ...options });
   }
 
   info<TData = unknown>(content: ToastContent<TData>, options?: ToastOptions<TData>): Id {
-    return this.showToast("info", content, options);
+    return this.showToast("info", content, { ...this.defaultOptions, ...options });
   }
 
   aviso<TData = unknown>(content: ToastContent<TData>, options?: ToastOptions<TData>): Id {
-    return this.showToast("warning", content, options);
+    return this.showToast("warning", content, { ...this.defaultOptions, ...options });
   }
 
   loading<TData = unknown>(content: ToastContent<TData>, options?: ToastOptions<TData>): Id {
@@ -40,7 +40,7 @@ class ToastService {
   }
 
   update<TData = unknown>(toastId: Id, options: UpdateOptions<TData>) {
-    return toast.update(toastId, { isLoading: false, ...options });
+    return toast.update(toastId, { ...this.defaultOptions, isLoading: false, ...options });
   }
 
   dismiss(id?: Id) {

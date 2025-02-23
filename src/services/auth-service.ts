@@ -1,10 +1,11 @@
 import { ServerApi } from "@/lib/axios/server-api";
 import { LoginReqDto, LoginResDto } from "@/types/dtos/services/login";
-import { Service } from "./service";
 
-class AuthService extends Service {
-  constructor(url: string) {
-    super(url, ServerApi)
+class AuthService {
+  protected readonly serverAPI;
+
+  constructor(protected readonly url: string) {
+    this.serverAPI = ServerApi;
   }
 
   public async login(data: LoginReqDto): Promise<LoginResDto> {

@@ -1,8 +1,7 @@
-import { EntidadeDto } from '@/types/dtos/entidade.dto'
-import { EncontroResDto } from '../encontro'
+import { EntidadeDto } from "../../entidade.dto"
 
 export interface PastaResDto extends EntidadeDto {
-	equipe: string
-	arquivoBase64?: string
-	encontro: EncontroResDto
+  nomeArquivo: string,
+  contentType: string
+  arquivo: string
 }

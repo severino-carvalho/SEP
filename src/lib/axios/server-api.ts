@@ -4,9 +4,6 @@ import axios, { AxiosInstance, CreateAxiosDefaults } from 'axios'
 
 const instanceAxiosOptions: CreateAxiosDefaults = {
 	baseURL: SEP_API_URL
-
-
-	
 }
 
 const ServerAPI: AxiosInstance = axios.create(instanceAxiosOptions)

@@ -21,21 +21,20 @@ const formSchema = z.object({
 
 export function Login() {
   const { isAuthenticated, login } = useAuth();
-
-  if (isAuthenticated) return <Navigate to={RotasAppEnum.HOME} />;
-
-  const [isFetchLogin, setIsFetchLogin] = useState(false)
+  const [isFetchLogin, setIsFetchLogin] = useState<boolean>(false)
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
   })
+
+  if (isAuthenticated) return <Navigate to={RotasAppEnum.HOME} />;
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsFetchLogin(true)
     const toastId = toastService.loading("Carregando solicitação")
 
     try {
-      await login(values).finally(() => setIsFetchLogin(false))
+      await login(values)
 
       const dataAtual = new Date()
       const mensagemLogin = mesagemBoasVindas(dataAtual)
@@ -44,7 +43,12 @@ export function Login() {
         type: "success"
       });
     } catch (error) {
-
+      toastService.update(toastId, {
+        render: "Erro ao realizar login",
+        type: "error"
+      });
+    } finally {
+      setIsFetchLogin(false)
     }
   }
 
@@ -63,7 +67,7 @@ export function Login() {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="w-5/12 border border-neutral-800 p-5 rounded-md space-y-8"
+          className="xl:w-4/12 lg:w-5/12 md:w-7/12 border border-neutral-800 p-5 rounded-md space-y-8"
         >
           <div className="flex flex-1 flex-col gap-1">
             <h1 className="text-3xl">Entrar</h1>

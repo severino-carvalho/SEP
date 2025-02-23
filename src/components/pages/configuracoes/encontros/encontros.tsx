@@ -39,7 +39,7 @@ export function Encontro() {
     }
   }
 
-  const { data: dadosTabela } = useQuery({
+  const { data: dadosTabela, isFetching } = useQuery({
     queryKey: [RotasApiEnum.ENCONTROS],
     queryFn: async () => await encontroService.findAll()
   })
@@ -73,6 +73,7 @@ export function Encontro() {
         <DataTable<EncontroResDto>
           data={dadosTabela}
           columns={colunasTabela}
+          isFetching={isFetching}
           href={RotasAppEnum.CONFIGURACOES_ENCONTRO_MANUTENCAO}
         />
       </ListagemLayout>

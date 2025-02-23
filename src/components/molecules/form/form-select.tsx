@@ -1,6 +1,5 @@
 import { FormControl, FormDescription, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { useEffect, useState } from "react";
 import { ControllerRenderProps } from "react-hook-form";
 
 export type SelectOption = {
@@ -14,30 +13,18 @@ interface FormSelectProps {
   mensagemNaoSelecionado?: string
   opcoes: SelectOption[]
   field: ControllerRenderProps<any>
+  isLoading?: boolean
 }
 
 export function FormSelect(props: FormSelectProps) {
-  const [valorSelecionado, setValorSelecionado] = useState<string>(
-    props.field.value?.toString()
-  )
-
   function onValueChange(opcao: string) {
-    props.field.onChange(opcao)
+    if (opcao) props.field.onChange(opcao)
   }
-
-  useEffect(() => { 
-    console.log(props.field.value)
-    onValueChange(props.field.value)
-    setValorSelecionado(props.field.value)
-  }, [props.field.value])
 
   return (
     <FormItem>
       <FormLabel>{props.label}</FormLabel>
-      <Select
-        onValueChange={onValueChange}
-        defaultValue={valorSelecionado}
-      >
+      <Select onValueChange={onValueChange} value={props.field.value?.toString()}>
         <FormControl>
           <SelectTrigger>
             <SelectValue placeholder={props.mensagemNaoSelecionado} />
@@ -45,9 +32,19 @@ export function FormSelect(props: FormSelectProps) {
         </FormControl>
 
         <SelectContent>
+          {props.isLoading && (
+            <SelectItem value="0" disabled>Carregando opçõess...</SelectItem>
+          )}
+
+          {
+            !props.isLoading && props.opcoes.length === 0 && (
+              <SelectItem value="0">Nenhuma opção disponível</SelectItem>
+            )
+          }
+
           {
             props.opcoes.map(opcao => (
-              <SelectItem value={opcao.value?.toString() || ''}>
+              <SelectItem value={opcao.value.toString()}>
                 {opcao.label}
               </SelectItem>
             ))

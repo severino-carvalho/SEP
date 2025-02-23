@@ -3,8 +3,8 @@ import { About } from './components/pages/about'
 import { Configuracoes } from './components/pages/configuracoes/configuracoes'
 import { Encontro } from './components/pages/configuracoes/encontros/encontros'
 import { ManutencaoEncontros } from './components/pages/configuracoes/encontros/manutencao-encontros'
-import { ManutencaoPastas } from './components/pages/configuracoes/pastas/manutencao-pastas'
-import { Pasta } from './components/pages/configuracoes/pastas/pastas'
+import { Equipe } from './components/pages/configuracoes/equipes/equipe'
+import { ManutencaoEquipes } from './components/pages/configuracoes/equipes/manutencao-equipe'
 import { ManutencaoUsuarios } from './components/pages/configuracoes/usuarios/manutencao-usuario'
 import { Usuario } from './components/pages/configuracoes/usuarios/usuario'
 import { Home } from './components/pages/home'
@@ -29,8 +29,8 @@ export function App() {
 							<Route path={RotasAppEnum.CONFIGURACOES_USUARIO_MANUTENCAO} element={<ManutencaoUsuarios />} />
 							<Route path={RotasAppEnum.CONFIGURACOES_ENCONTRO} element={<Encontro />} />
 							<Route path={RotasAppEnum.CONFIGURACOES_ENCONTRO_MANUTENCAO} element={<ManutencaoEncontros />} />
-							<Route path={RotasAppEnum.CONFIGURACOES_PASTA} element={<Pasta />} />
-							<Route path={RotasAppEnum.CONFIGURACOES_PASTA_MANUTENCAO} element={<ManutencaoPastas />} />
+							<Route path={RotasAppEnum.CONFIGURACOES_EQUIPE} element={<Equipe />} />
+							<Route path={RotasAppEnum.CONFIGURACOES_EQUIPE_MANUTENCAO} element={<ManutencaoEquipes />} />
 						</Route>
 					</Route>
 				</Routes>
