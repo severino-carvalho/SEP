@@ -13,5 +13,8 @@ export enum RotasAppEnum {
 	CONFIGURACOES_ENCONTRO_MANUTENCAO = '/configuracoes/encontro/manutencao',
 
 	CONFIGURACOES_EQUIPE = '/configuracoes/equipe',
-	CONFIGURACOES_EQUIPE_MANUTENCAO = '/configuracoes/equipe/manutencao'
+	CONFIGURACOES_EQUIPE_MANUTENCAO = '/configuracoes/equipe/manutencao',
+
+	CONFIGURACOES_EQUIPISTA = '/configuracoes/equipista',
+	CONFIGURACOES_EQUIPISTA_MANUTENCAO = '/configuracoes/equipista/manutencao'
 }

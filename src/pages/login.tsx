@@ -1,3 +1,6 @@
+import { FormInput } from "@/components/molecules/form/form-input";
+import { Button } from "@/components/ui/button";
+import { Form, FormField } from "@/components/ui/form";
 import { useAuth } from "@/hooks/use-auth";
 import { toastService } from "@/lib/useQuery/toast-service";
 import { RotasAppEnum } from "@/types/enums/rotas-app-enum";
@@ -7,9 +10,6 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Navigate } from "react-router-dom";
 import { z } from "zod";
-import { FormInput } from "../molecules/form/form-input";
-import { Button } from "../ui/button";
-import { Form, FormField } from "../ui/form";
 
 const formSchema = z.object({
   email: z.string()

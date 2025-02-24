@@ -3,7 +3,7 @@ import { DataTable } from "@/components/data-table";
 import { ContainerPage } from "@/components/templates/container-page";
 import { ListagemLayout } from "@/components/templates/listagem-layout";
 import { usuarioService } from "@/services/usuario-service";
-import { UsuarioResDto } from "@/types/dtos/services/encontro/usuario-res.dto";
+import { UsuarioResDto } from "@/types/dtos/services/usuario";
 import { RotasApiEnum } from "@/types/enums/rotas-api-enum";
 import { RotasAppEnum } from "@/types/enums/rotas-app-enum";
 import { useQuery } from "@tanstack/react-query";
@@ -28,7 +28,7 @@ export function Usuario() {
 
   return (
     <ContainerPage className="gap-10" listaItensBreadcrumb={listaItensBreadcrumb}>
-      <ListagemLayout tituloPage="Listagem de Usuários">
+      <ListagemLayout tituloPage="Listagem de usuários">
         <DataTable<UsuarioResDto>
           columns={colunasTabela}
           data={dadosTabela}

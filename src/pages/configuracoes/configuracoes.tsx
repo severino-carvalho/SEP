@@ -1,8 +1,7 @@
 import { Breadcrumb, BreadcrumbListType } from "@/components/atoms/breadcrumb";
+import { CardLink } from "@/components/molecules/card-link";
 import { RotasAppEnum } from "@/types/enums/rotas-app-enum";
 import { CalendarCog, FolderCog, UserRoundCog } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Card, CardContent, CardDescription, CardHeader } from "../../ui/card";
 
 const listaItensBreadcrumb: BreadcrumbListType[] = [
   { titulo: "Home", href: RotasAppEnum.HOME },
@@ -20,45 +19,38 @@ export function Configuracoes() {
           <p className="text-base">Escolha uma das configuracoes para poder gerenciar</p>
         </div>
 
-        <section className="flex gap-5 lg:gap-10 flex-wrap w-full">
-          <Link to={RotasAppEnum.CONFIGURACOES_USUARIO} className="w-full lg:w-1/4 h-full cursor-pointer">
-            <Card className="flex flex-col h-full hover:bg-sidebar">
-              <CardHeader>
-                <UserRoundCog />
-              </CardHeader>
+        <section className="flex gap-5 justify-between flex-wrap w-full">
+          <CardLink
+            titulo="Usuários"
+            icon={<UserRoundCog />}
+            to={RotasAppEnum.CONFIGURACOES_USUARIO}
+            className="lg:max-w-1/3 md:max-w-1/2 max-w-1/4 max-h-full flex-1"
+            descricao="Gerencie permissões, cadastre novos usuários e ajuste configurações de acesso."
+          />
 
-              <CardContent>
-                <span className="text-gray-200">Usuários</span>
-                <CardDescription>Alias nihil dicta dolore ad nobis aspernatur soluta ea</CardDescription>
-              </CardContent>
-            </Card>
-          </Link>
+          <CardLink
+            titulo="Encontros"
+            icon={<CalendarCog />}
+            to={RotasAppEnum.CONFIGURACOES_ENCONTRO}
+            className="lg:max-w-1/3 md:max-w-1/2 max-w-1/4 max-h-full flex-1"
+            descricao="Crie, edite e acompanhe os encontros organizados pela equipe."
+          />
 
-          <Link to={RotasAppEnum.CONFIGURACOES_ENCONTRO} className="w-1/3 lg:w-1/4 h-full cursor-pointer">
-            <Card className="flex flex-col h-full hover:bg-sidebar">
-              <CardHeader>
-                <CalendarCog />
-              </CardHeader>
+          <CardLink
+            titulo="Equipes"
+            icon={<FolderCog />}
+            to={RotasAppEnum.CONFIGURACOES_EQUIPE}
+            className="lg:max-w-1/3 md:max-w-1/2 max-w-1/4 max-h-full flex-1"
+            descricao="Configure as equipes responsáveis por eventos e atribua funções específicas."
+          />
 
-              <CardContent>
-                <span className="text-gray-200">Encontros</span>
-                <CardDescription>Lorem, ipsum dolor sit amet consectetur adipisicing elit</CardDescription>
-              </CardContent>
-            </Card>
-          </Link>
-
-          <Link to={RotasAppEnum.CONFIGURACOES_EQUIPE} className="w-1/3 lg:w-1/4 h-full cursor-pointer">
-            <Card className="flex flex-col h-full hover:bg-sidebar">
-              <CardHeader>
-                <FolderCog />
-              </CardHeader>
-
-              <CardContent>
-                <span className="text-gray-200">Equipes</span>
-                <CardDescription>Ab, tempora id! Reprehenderit mollitia atque officiis? Sequi, odit nesciunt</CardDescription>
-              </CardContent>
-            </Card>
-          </Link>
+          <CardLink
+            titulo="Equipistas"
+            icon={<FolderCog />}
+            className="lg:max-w-1/3 md:max-w-1/2 max-w-1/4 max-h-full flex-1"
+            to={RotasAppEnum.CONFIGURACOES_EQUIPISTA}
+            descricao="Gerencie equipistas, atribua funções e ajuste configurações de acesso."
+          />
         </section>
       </div>
     </div>

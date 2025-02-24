@@ -69,7 +69,7 @@ export function Encontro() {
       className="gap-10"
       listaItensBreadcrumb={listaItensBreadcrumb}
     >
-      <ListagemLayout tituloPage="Listagem de Encontros" >
+      <ListagemLayout tituloPage="Listagem de encontros" >
         <DataTable<EncontroResDto>
           data={dadosTabela}
           columns={colunasTabela}

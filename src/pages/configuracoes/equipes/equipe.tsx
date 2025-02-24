@@ -94,7 +94,7 @@ export function Equipe() {
 
   return (
     <ContainerPage className="gap-10" listaItensBreadcrumb={listaItensBreadcrumb}>
-      <ListagemLayout tituloPage="Listagem de Equipes" >
+      <ListagemLayout tituloPage="Listagem de equipes" >
         <DataTable<EquipeResDto>
           data={dadosTabela}
           columns={colunasTabela}

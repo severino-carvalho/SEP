@@ -49,7 +49,7 @@ export const equipeFormSchema = z.object({
 
 type EquipeFormType = z.infer<typeof equipeFormSchema>
 
-export function ManutencaoEquipes() {
+export function ManutencaoEquipista() {
   const location = useLocation()
   const navigate = useNavigate()
 

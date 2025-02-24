@@ -1,4 +1,4 @@
-import { Breadcrumb, BreadcrumbListType } from '../atoms/breadcrumb'
+import { Breadcrumb, BreadcrumbListType } from "@/components/atoms/breadcrumb"
 
 const listaItensBreadcrumb: BreadcrumbListType[] = [{ titulo: "Sobre" }]
 
