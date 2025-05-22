@@ -1,3 +1,4 @@
+import { EEstadoCivil, ESacramento } from "@/types/enums/app";
 import { EntidadeDto } from "../../entidade.dto";
 
 export interface EquipistaResDto extends EntidadeDto {
@@ -7,49 +8,33 @@ export interface EquipistaResDto extends EntidadeDto {
 	endereco?: EnderecoDto;
 	numeroTelefone: string;
 	areaAtuacao?: AreaAtuacaoDto;
-	estadoCivil: EstadoCivil;
+	estadoCivil: EEstadoCivil;
 	filhos?: string;
 	pastorais?: PastoralDto[];
-	sacramento?: Sacramento;
+	sacramento?: ESacramento[];
 	participacoesEncontros?: ParticipacaoEncontroDto[];
 }
 
-interface EnderecoDto {
-	rua?: string;
-	cep?: string;
-	numero?: string;
-	bairro?: string;
-	cidade?: string;
-	estado?: string;
+export interface EnderecoDto {
+	rua: string;
+	cep: string;
+	numero: string;
+	bairro: string;
+	cidade: string;
+	estado: string;
 }
 
-interface AreaAtuacaoDto {
+export interface AreaAtuacaoDto {
 	nome: string;
 	descricao?: string;
 }
 
-enum EstadoCivil {
-	SOLTEIRO = "SOLTEIRO",
-	CASADO = "CASADO",
-	DIVORCIADO = "DIVORCIADO",
-	VIUVO = "VIUVO"
-}
-
-interface PastoralDto {
+export interface PastoralDto {
 	id: number;
 	nome: string;
 }
 
-enum Sacramento {
-	BATISMO = "BATISMO",
-	EUCARISTIA = "EUCARISTIA",
-	CRISMA = "CRISMA",
-	MATRIMONIO = "MATRIMONIO",
-	ORDEM = "ORDEM",
-	UNCAO_DOS_ENFERMOS = "UNCAO_DOS_ENFERMOS"
-}
-
-interface ParticipacaoEncontroDto {
+export interface ParticipacaoEncontroDto {
 	id: number;
 	encontroId: number;
 	equipistaId: number;

@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import { IChildren } from "@/types/components/IChildren";
+import { IChildren } from "@/types/components/IBasicComponent";
 import { ComponentProps } from "react";
 
 type ContainerLayoutType = IChildren & ComponentProps<'div'>

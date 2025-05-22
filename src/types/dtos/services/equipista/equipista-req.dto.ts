@@ -1,57 +1,54 @@
+import { EEstadoCivil, ESacramento } from "@/types/enums/app";
 import { EntidadeDto } from "../../entidade.dto";
 
-export interface EquipistaReqDto extends Partial<EntidadeDto> {
-	foto?: string;
+interface FileBaseDTO extends Partial<EntidadeDto> {
+	fileName: string;
+	fileType: string;
+	fileData: number[];
+}
+
+export interface EquipistaReqDto extends Partial<EntidadeDto>, FileBaseDTO {
 	nome: string;
 	dataNascimento: string;
-	endereco?: EnderecoDto;
+	enderecoDTO: EnderecoDTO;
 	numeroTelefone: string;
-	areaAtuacao?: AreaAtuacaoDto;
-	estadoCivil: EstadoCivil;
-	filhos?: string;
-	pastorais?: PastoralDto[];
-	sacramento?: Sacramento;
-	participacoesEncontros?: ParticipacaoEncontroDto[];
+	areaAtuacaoDTO: AreaAtuacaoDTO;
+	estadoCivil: EEstadoCivil;
+	filhos: string;
+	sacramento: ESacramento;
+	pastorais: PastoralDTO[];
+	participacoesEncontros: ParticipacaoEncontroDTO[];
 }
 
-export interface EnderecoDto {
-	rua?: string;
-	cep?: string;
-	numero?: string;
-	bairro?: string;
-	cidade?: string;
-	estado?: string;
+interface EnderecoDTO {
+	logradouro: string;
+	cep: string;
+	numero: string;
+	bairro: string;
+	cidade: string;
+	estado: string;
+	complemento: string;
 }
 
-export interface AreaAtuacaoDto {
-	nome: string;
-	descricao?: string;
+interface AreaAtuacaoDTO {
+	formacao: string;
+	ocupacao: string;
+	profissao: string;
+	habilidades: string;
 }
 
-export enum EstadoCivil {
-	SOLTEIRO = "SOLTEIRO",
-	CASADO = "CASADO",
-	DIVORCIADO = "DIVORCIADO",
-	VIUVO = "VIUVO"
-}
-
-export interface PastoralDto {
+interface PastoralDTO {
 	id: number;
 	nome: string;
 }
 
-export enum Sacramento {
-	BATISMO = "BATISMO",
-	EUCARISTIA = "EUCARISTIA",
-	CRISMA = "CRISMA",
-	MATRIMONIO = "MATRIMONIO",
-	ORDEM = "ORDEM",
-	UNCAO_DOS_ENFERMOS = "UNCAO_DOS_ENFERMOS"
-}
-
-export interface ParticipacaoEncontroDto {
+interface ParticipacaoEncontroDTO {
 	id: number;
 	encontroId: number;
+	nomeEncontro: string;
+	equipeId: number;
+	nomeEquipe: string;
 	equipistaId: number;
-	dataParticipacao: string;
+	anoParticipacao: number;
+	tipoParticipacao: string;
 }

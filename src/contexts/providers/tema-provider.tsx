@@ -1,10 +1,10 @@
 import { Tema } from "@/types/contexts/tema-type"
 import { LOCAL_STORAGE_ENUM } from "@/types/enums/local-storage-key-enum"
-import { useEffect, useMemo, useState } from "react"
+import { ReactNode, useEffect, useMemo, useState } from "react"
 import { TemaProviderContext } from "../tema-context"
 
 type TemaProviderProps = {
-	children: React.ReactNode
+	children: ReactNode
 	defaultTema?: Tema
 	storageKey?: string
 }

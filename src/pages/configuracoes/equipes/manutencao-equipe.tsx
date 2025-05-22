@@ -221,11 +221,11 @@ export function ManutencaoEquipes() {
               name="encontroId"
               render={({ field }) => (
                 <FormSelect
-                  field={field}
+                  field={field as never}
                   label="Encontro"
                   isLoading={isFetching}
                   opcoes={converterEquipeToSelectvalues(encontros || [])}
-                  mensagemNaoSelecionado="Selecione um encontro"
+                  placeholder="Selecione um encontro"
                 />
               )}
             />

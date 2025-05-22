@@ -1,5 +1,6 @@
 import { Acoes } from "@/components/molecules/tabela/acoes";
-import { AreaAtuacaoDto, EnderecoDto, EquipistaResDto, EstadoCivil, ParticipacaoEncontroDto, PastoralDto } from "@/types/dtos/services/equipista";
+import { AreaAtuacaoDto, EnderecoDto, EquipistaResDto, ParticipacaoEncontroDto, PastoralDto } from "@/types/dtos/services/equipista";
+import { EEstadoCivil } from "@/types/enums/app";
 import { RotasAppEnum } from "@/types/enums/rotas-app-enum";
 import { ColumnDef } from "@tanstack/react-table";
 
@@ -28,7 +29,7 @@ export function montarColunasEquipistas(
     {
       accessorKey: "estadoCivil",
       header: "Estado Civil",
-      cell: (info) => EstadoCivil[info.getValue() as keyof typeof EstadoCivil],
+      cell: (info) => EEstadoCivil[info.getValue() as keyof typeof EEstadoCivil],
     },
     { accessorKey: "filhos", header: "Filhos" },
     {

@@ -12,20 +12,19 @@ import { ptBR } from "date-fns/locale"
 import { Calendar as CalendarIcon } from "lucide-react"
 import { useState } from "react"
 
-interface DatePickerProps {
+interface InputDatePickerProps {
   label?: string
   placeholder?: string
 }
 
-
-export function DatePicker(props: DatePickerProps) {
+export function InputDatePicker(props: InputDatePickerProps) {
   const [date, setDate] = useState<Date>()
 
   return (
     <Popover>
       <PopoverTrigger asChild>
         <div>
-          {props.label && <Label>{props.label}</Label>}
+          <Label>{props.label}</Label>
           <Button
             variant={"outline"}
             className={cn(
@@ -34,11 +33,7 @@ export function DatePicker(props: DatePickerProps) {
             )}
           >
             <CalendarIcon className="mr-2 h-4 w-4" />
-            {
-              date
-                ? format(date, "dd/MM/yyyy", { locale: ptBR })
-                : <span>{props.placeholder ?? 'Selecionar'}</span>
-            }
+            {date ? format(date, "dd/MM/yyyy", { locale: ptBR }) : <span>{props.placeholder ?? 'Selecionar'}</span>}
           </Button>
         </div>
       </PopoverTrigger>

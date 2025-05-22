@@ -1,6 +1,6 @@
 import { toastService } from "@/lib/useQuery/toast-service";
 import { authService } from "@/services/auth-service";
-import { IChildren } from "@/types/components/IChildren";
+import { IChildren } from "@/types/components/IBasicComponent";
 import { IJWTPayload } from "@/types/contexts/jwt-payload";
 import { ILocalStorage } from "@/types/contexts/local-storage";
 import { UsuarioAutenticado } from "@/types/contexts/usuario-autenticado";

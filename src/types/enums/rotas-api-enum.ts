@@ -3,4 +3,5 @@ export enum RotasApiEnum {
   EQUIPE = "/equipes",
   USUARIOS = "/usuarios",
   EQUIPISTA = "/equipistas",
+  PASTORAL = "/pastoral"
 }

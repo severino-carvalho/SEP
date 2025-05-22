@@ -1,4 +1,4 @@
-import { IChildren } from "@/types/components/IChildren";
+import { IChildren } from "@/types/components/IBasicComponent";
 import { RotasAppEnum } from "@/types/enums/rotas-app-enum";
 import { Edit, Trash2 } from "lucide-react";
 import { useState } from "react";

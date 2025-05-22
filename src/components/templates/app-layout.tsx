@@ -1,6 +1,6 @@
 import { AppSidebar } from '@/components/app-sidebar'
 import { SidebarProvider } from '@/components/ui/sidebar'
-import { IChildren } from '@/types/components/IChildren'
+import { IChildren } from '@/types/components/IBasicComponent'
 import { useState } from 'react'
 import { Outlet } from 'react-router-dom'
 import { ContainerLayout } from './container-layout'
