@@ -20,19 +20,13 @@ const listaItensBreadcrumb: BreadcrumbListType[] = [
 
 export function Equipista() {
   async function buscarEquipistas() {
-    try {
-      return await equipistaService.findAll()
-    } catch (error) {
-      console.error(error)
-      toastService.erro("Erro ao buscar equipistas")
-      return []
-    }
+    return await equipistaService.findPageable()
+      .then((res) => res.content)
+      .catch(() => {
+        toastService.erro("Erro ao buscar equipistas")
+        return []
+      })
   }
-
-  const { data: dadosTabela, isFetching } = useQuery({
-    queryKey: [RotasApiEnum.EQUIPISTA],
-    queryFn: async () => await buscarEquipistas()
-  })
 
   async function removerEquipe(id: number) {
     const toastId = toastService.loading("Removendo equipe")
@@ -46,6 +40,11 @@ export function Equipista() {
       toastService.update(toastId, { render: "Erro ao remover equipe", type: "error" })
     }
   }
+
+  const { data: dadosTabela, isFetching } = useQuery({
+    queryKey: [RotasApiEnum.EQUIPISTA],
+    queryFn: buscarEquipistas
+  })
 
   return (
     <ContainerPage className="gap-10" listaItensBreadcrumb={listaItensBreadcrumb}>
