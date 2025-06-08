@@ -26,34 +26,37 @@ export function Equipe() {
   async function downloadPasta(pastaId: number) {
     const toastId = toastService.loading("Baixando pasta")
 
-    try {
-      const pasta = await equipeService.downloadPasta(pastaId)
-      gerarLinkDownload(pasta)
-      toastService.update(toastId, { render: "Sucesso ao baixar pasta", type: "success" })
-    } catch (error) {
-      toastService.update(toastId, { render: "Erro ao baixar pasta", type: "error" })
-    }
+    await equipeService.downloadPasta(pastaId)
+      .then((pasta) => {
+        gerarLinkDownload(pasta)
+        toastService.update(toastId, { render: "Sucesso ao baixar pasta", type: "success" })
+      })
+      .catch(() => toastService.update(toastId, { render: "Erro ao baixar pasta", type: "error" }))
   }
 
   async function removerEquipe(id: number) {
     const toastId = toastService.loading("Removendo equipe")
 
-    try {
-      await equipeService.delete(id)
-      queryClient.invalidateQueries({ queryKey: [RotasApiEnum.EQUIPE] })
-      toastService.update(toastId, { render: "Sucesso ao remover equipe", type: "success" })
-    } catch (error) {
-      toastService.update(toastId, { render: "Erro ao remover equipe", type: "error" })
-    }
+    await equipeService.delete(id)
+      .then(() => {
+        queryClient.invalidateQueries({ queryKey: [RotasApiEnum.EQUIPE] })
+        toastService.update(toastId, { render: "Sucesso ao remover equipe", type: "success" })
+      })
+      .catch(() => toastService.update(toastId, { render: "Erro ao remover equipe", type: "error" }))
+  }
+
+  async function loadEquipes() {
+    const { content } = await equipeService.findPageable();
+    return content;
   }
 
   const { data: dadosTabela, isFetching } = useQuery({
     queryKey: [RotasApiEnum.EQUIPE],
-    queryFn: async () => await equipeService.findAll()
+    queryFn: async () => loadEquipes()
   })
 
   const colunasTabela: ColumnDef<EquipeResDto>[] = [
-    { accessorKey: "equipe", header: "Nome" },
+    { accessorKey: "nome", header: "Nome" },
     {
       accessorKey: "pasta",
       header: "Pasta",
@@ -64,8 +67,8 @@ export function Equipe() {
       header: "Ações",
       cell: ({ row }) => {
         const equipeId = row.original.id;
-        const nomeEquipe = row.original.equipe;
-        const arquivoId = row.original.pasta?.id;
+        const nomeEquipe = row.original.nome;
+        const arquivoId = row.original.id;
 
         return (
           <Acoes

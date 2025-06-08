@@ -29,7 +29,7 @@ export function Encontro() {
   }
 
   async function loadEncontros() {
-    const { content } = await encontroService.findAll();
+    const { content } = await encontroService.findPageable();
     return content;
   }
 

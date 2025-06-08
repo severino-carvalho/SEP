@@ -1,6 +1,25 @@
 import { EntidadeDto } from "./entidade.dto"
 
-export interface FiltroPaginacaoDto<T extends EntidadeDto> {
+export interface Filter {
+  attribute: string
+  operator: "equal" | "or" | "not_equal" | "in" | "not_in" | "contains"
+  type: string
+  values: string[] | number[]
+  order?: "ASC" | "DESC"
+}
+
+export interface FiltroPaginacao {
+  page: number
+  size: number
+  filters: Filter[]
+}
+
+export interface FiltroPaginacaoResponse<T> {
+  content: T[]
+  totalElements: number
+}
+
+export interface FiltroPaginacaoResponseDto<T extends EntidadeDto> {
   "totalPages": number,
   "totalElements": number,
   "pageable": {
