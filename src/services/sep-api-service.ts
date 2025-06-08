@@ -1,5 +1,6 @@
 import { ServerApi } from '@/lib/axios/server-api';
 import { EntidadeDto } from '@/types/dtos/entidade.dto';
+import { FiltroPaginacaoDto } from '@/types/dtos/filtro-paginacao-dto';
 import { IGenericoService } from '@/types/services/GenericoService';
 
 export class SEPApiService<S, R extends EntidadeDto> implements IGenericoService<S, R> {
@@ -9,8 +10,8 @@ export class SEPApiService<S, R extends EntidadeDto> implements IGenericoService
 		this.serverAPI = ServerApi
 	}
 
-	async findAll(): Promise<R[]> {
-		const { data } = await this.serverAPI.get<R[]>(this.url)
+	async findAll(): Promise<FiltroPaginacaoDto<R>> {
+		const { data } = await this.serverAPI.get<FiltroPaginacaoDto<R>>(this.url)
 		return data
 	}
 

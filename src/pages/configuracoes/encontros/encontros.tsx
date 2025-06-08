@@ -15,33 +15,27 @@ import { ColumnDef } from "@tanstack/react-table";
 const listaItensBreadcrumb: BreadcrumbListType[] = [
   { titulo: "Home", href: RotasAppEnum.HOME },
   { titulo: "Configurações", href: RotasAppEnum.CONFIGURACOES },
-  { titulo: "Entrontros" }
+  { titulo: "Encontros" }
 ]
 
 export function Encontro() {
   async function onDeletarEncontro(encontroId: number) {
     const toastId = toastService.loading("Removendo encontro")
 
-    try {
-      await encontroService.delete(encontroId)
-
+    await encontroService.delete(encontroId).then(() => {
       queryClient.invalidateQueries({ queryKey: [RotasApiEnum.ENCONTROS] })
-      toastService.update(toastId, {
-        render: "Encontro removido com sucesso",
-        type: "success"
-      })
+      toastService.update(toastId, { render: "Encontro removido com sucesso", type: "success" })
+    }).catch(() => toastService.update(toastId, { render: "Erro ao remover encontro", type: "error" }))
+  }
 
-    } catch (error) {
-      toastService.update(toastId, {
-        render: "Erro ao remover encontro",
-        type: "error"
-      })
-    }
+  async function loadEncontros() {
+    const { content } = await encontroService.findAll();
+    return content;
   }
 
   const { data: dadosTabela, isFetching } = useQuery({
     queryKey: [RotasApiEnum.ENCONTROS],
-    queryFn: async () => await encontroService.findAll()
+    queryFn: async () => await loadEncontros()
   })
 
   const colunasTabela: ColumnDef<EncontroResDto>[] = [

@@ -1,7 +1,8 @@
 import { EntidadeDto } from '@/types/dtos/entidade.dto'
+import { FiltroPaginacaoDto } from '../dtos/filtro-paginacao-dto'
 
 export interface IGenericoService<S, R extends EntidadeDto> {
-	findAll(): Promise<R[]>
+	findAll(): Promise<FiltroPaginacaoDto<R>>
 
 	findById(id: number): Promise<R>
 
