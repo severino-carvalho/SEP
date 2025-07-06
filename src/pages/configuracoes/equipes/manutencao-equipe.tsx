@@ -36,7 +36,7 @@ const formatoArquivosPermitidos = ["pdf", "doc", "docx"]
 
 export const equipeFormSchema = z.object({
   id: z.coerce.number().optional(),
-  equipe: z.string({ required_error: "Informe o nome da equipe" })
+  nome: z.string({ required_error: "Informe o nome da equipe" })
     .min(1, { message: "Informe o nome da equipe" })
     .max(255, { message: "Limite de caracteres atingido" }),
   arquivo: z.instanceof(File)
@@ -186,7 +186,10 @@ export function ManutencaoEquipes() {
 
   const { data: encontros, isFetching } = useQuery({
     queryKey: [RotasApiEnum.ENCONTROS],
-    queryFn: async () => await encontroService.findAll()
+    queryFn: async () => {
+      const response = await encontroService.findAll()
+      return (response as any)?.content || response || []
+    }
   })
 
   return (
@@ -198,7 +201,7 @@ export function ManutencaoEquipes() {
         >
           <section className="flex flex-col gap-5">
             <FormField
-              name="equipe"
+              name="nome"
               control={form.control}
               render={({ field }) => (
                 <FormInput

@@ -13,19 +13,22 @@ export function ExtrasEquipistaForm() {
 
   async function fetchPastorais() {
     try {
-      return await pastoralService.findAll()
+      const response = await pastoralService.findAll()
+      return (response as any)?.content || response || []
     } catch (error) {
       ErroUtil.tratar(error)
+      return []
     }
   }
 
   const { data: pastorais } = useQuery({
-    queryKey: [RotasApiEnum.EQUIPE],
-    queryFn: async () => await fetchPastorais(),
+    queryKey: [RotasApiEnum.PASTORAL],
+    queryFn: fetchPastorais
   })
 
-  const profissaoOptions = pastorais
-    ?.map((pastoral) => ({ label: pastoral.nome, value: pastoral.id } as SelectOption)) ?? [];
+  const profissaoOptions = Array.isArray(pastorais)
+    ? pastorais.map((pastoral: any) => ({ label: pastoral.nome, value: pastoral.id } as SelectOption))
+    : [];
 
   const sacramentosOptions = Object.entries(ESacramento)
     .map(([key, value]) => ({ label: value, value: key } as SelectOption));

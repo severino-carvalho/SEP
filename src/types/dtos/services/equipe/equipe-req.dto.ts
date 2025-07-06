@@ -1,7 +1,7 @@
 import { EntidadeDto } from "../../entidade.dto"
 
 export interface EquipeReqDto extends Partial<EntidadeDto> {
-	equipe: string
+	nome: string
 	arquivo?: File
 	encontroId: number
 }

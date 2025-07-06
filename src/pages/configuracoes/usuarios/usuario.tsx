@@ -23,7 +23,10 @@ const colunasTabela: ColumnDef<UsuarioResDto>[] = [
 export function Usuario() {
   const { data: dadosTabela } = useQuery({
     queryKey: [RotasApiEnum.USUARIOS],
-    queryFn: async () => await usuarioService.findAll()
+    queryFn: async () => {
+      const response = await usuarioService.findAll()
+      return (response as any)?.content || response || []
+    }
   })
 
   return (

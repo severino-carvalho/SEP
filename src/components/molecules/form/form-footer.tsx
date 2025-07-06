@@ -12,10 +12,10 @@ interface FormFooterProps extends ComponentProps<'div'>, Partial<FormState<never
 /**
  * @property href - url para o caso de cancelamento
  */
-export function FormFooter({ href, isEdicao = false, ...props }: FormFooterProps) {
+export function FormFooter({ href, isEdicao = false, isSubmitting, ...props }: FormFooterProps) {
   return (
     <div {...props} className={cn("flex gap-2.5", props.className)}>
-      <Button type="submit" disabled={props.isSubmitting}>
+      <Button type="submit" disabled={isSubmitting}>
         {isEdicao ? "Atualizar" : "Adicionar"}
       </Button>
 
