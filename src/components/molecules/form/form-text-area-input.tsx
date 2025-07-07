@@ -1,7 +1,7 @@
+import { Textarea } from "@/components/ui/textarea";
 import { ComponentProps } from "react";
 import { ControllerRenderProps } from "react-hook-form";
 import { FormControl, FormDescription, FormItem, FormLabel, FormMessage } from "../../ui/form";
-import { Input } from "../../ui/input";
 
 interface FormInputProps extends ComponentProps<'input'> {
   label?: string
@@ -9,17 +9,24 @@ interface FormInputProps extends ComponentProps<'input'> {
   field?: ControllerRenderProps<any>
 }
 
-export function FormInput({ descricao, label, ...props }: FormInputProps) {
+export function FormTextAreaInput({ field, descricao, label }: FormInputProps) {
   return (
     <FormItem className="flex flex-col">
-      <FormLabel>{label}</FormLabel>
+      {label && <FormLabel>Habilidades</FormLabel>}
+
       <FormControl>
-        <Input {...props} />
+        <Textarea
+          className="resize-none"
+          placeholder="Insira suas habilidades"
+          {...field}
+        />
       </FormControl>
+
       {descricao && <FormDescription>{descricao}</FormDescription>}
+
       <FormMessage />
     </FormItem>
   );
 }
 
-FormInput.displayName = "FormInput";
+FormTextAreaInput.displayName = "FormInput";

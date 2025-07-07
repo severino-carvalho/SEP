@@ -1,4 +1,3 @@
-import { EEstadoCivil, ESacramento } from "@/types/enums/app";
 import { EntidadeDto } from "../../entidade.dto";
 
 interface FileBaseDTO extends Partial<EntidadeDto> {
@@ -9,46 +8,38 @@ interface FileBaseDTO extends Partial<EntidadeDto> {
 
 export interface EquipistaReqDto extends Partial<EntidadeDto>, FileBaseDTO {
 	nome: string;
-	dataNascimento: string;
-	enderecoDTO: EnderecoDTO;
+	dataNascimento: Date;
+	endereco: EnderecoDTO;
 	numeroTelefone: string;
-	areaAtuacaoDTO: AreaAtuacaoDTO;
-	estadoCivil: EEstadoCivil;
+	areaAtuacao: AreaAtuacaoDTO;
+	estadoCivil: string;
 	filhos: string;
-	sacramento: ESacramento;
-	pastorais: PastoralDTO[];
-	participacoesEncontros: ParticipacaoEncontroDTO[];
+	idPastorais: number[];
+	sacramento: string;
+	participacoesEncontro: ParticipacaoEncontroRequestDTO[];
+	arquivo?: File;
 }
 
 interface EnderecoDTO {
-	logradouro: string;
 	cep: string;
+	logradouro: string;
 	numero: string;
+	complemento?: string;
 	bairro: string;
 	cidade: string;
 	estado: string;
-	complemento: string;
 }
 
 interface AreaAtuacaoDTO {
 	formacao: string;
 	ocupacao: string;
 	profissao: string;
-	habilidades: string;
+	habilidades?: string;
 }
 
-interface PastoralDTO {
-	id: number;
-	nome: string;
-}
-
-interface ParticipacaoEncontroDTO {
-	id: number;
-	encontroId: number;
-	nomeEncontro: string;
-	equipeId: number;
-	nomeEquipe: string;
-	equipistaId: number;
-	anoParticipacao: number;
+interface ParticipacaoEncontroRequestDTO {
+	idEquipe: number;
+	ano: number;
 	tipoParticipacao: string;
+	acaoParticipacaoEncontro?: string;
 }

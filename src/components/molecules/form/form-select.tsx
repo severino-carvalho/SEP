@@ -17,32 +17,37 @@ interface FormSelectProps extends ComponentProps<'select'> {
   isLoading?: boolean
 }
 
-export function FormSelect(props: FormSelectProps) {
+export function FormSelect({
+  label,
+  descricao,
+  placeholder,
+  opcoes,
+  field,
+  isLoading,
+}: FormSelectProps) {
   function onValueChange(opcao: string) {
-    console.log(opcao)
-
-    if (opcao) props.field.onChange(opcao)
+    if (opcao) field.onChange(opcao)
   }
 
   return (
-    <FormItem className="flex-1">
-      <FormLabel>{props.label}</FormLabel>
+    <FormItem className="flex flex-col flex-1">
+      <FormLabel>{label}</FormLabel>
 
-      <Select onValueChange={onValueChange} value={props.field.value?.toString()}>
+      <Select onValueChange={onValueChange} value={field.value?.toString()}>
         <FormControl>
-          <SelectTrigger>
-            <SelectValue placeholder={props.placeholder} />
+          <SelectTrigger className={`${!field.value ? 'text-muted-foreground' : ''}`}>
+            <SelectValue placeholder={placeholder} />
           </SelectTrigger>
         </FormControl>
 
         <SelectContent>
-          {props.isLoading && (<SelectItem value="0" disabled>Carregando opçõess...</SelectItem>)}
+          {isLoading && (<SelectItem value="0" disabled>Carregando opçõess...</SelectItem>)}
 
-          {!props.isLoading && props.opcoes.length === 0 && (
+          {!isLoading && opcoes.length === 0 && (
             <SelectItem value="0" disabled>Nenhuma opção disponível</SelectItem>
           )}
 
-          {props.opcoes.map(opcao => (
+          {opcoes.map(opcao => (
             <SelectItem value={opcao.value.toString()}>
               {opcao.label}
             </SelectItem>
@@ -50,7 +55,7 @@ export function FormSelect(props: FormSelectProps) {
         </SelectContent>
       </Select>
 
-      <FormDescription>{props.descricao}</FormDescription>
+      {descricao && <FormDescription>{descricao}</FormDescription>}
 
       <FormMessage />
     </FormItem>

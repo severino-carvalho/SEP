@@ -1,25 +1,20 @@
+import { FormDatePicker } from "@/components/molecules/form/form-date-picker";
 import { FormInput } from "@/components/molecules/form/form-input";
+import { FormInputTelefone } from "@/components/molecules/form/form-input-telefone";
 import { FormSelect, SelectOption } from "@/components/molecules/form/form-select";
-import { Button } from "@/components/ui/button";
-import { Calendar } from "@/components/ui/calendar";
-import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { cn } from "@/lib/utils";
+import { FormField } from "@/components/ui/form";
 import { EquipistaReqDto } from "@/types/dtos/services/equipista";
 import { EEstadoCivil } from "@/types/enums/app";
-import { format } from "date-fns";
-import { ptBR } from "date-fns/locale";
-import { CalendarIcon } from "lucide-react";
 import { useFormContext } from "react-hook-form";
 
 export function CadastrosBasicos() {
   const form = useFormContext<EquipistaReqDto>()
 
   const estadoCivilOptions = Object.entries(EEstadoCivil)
-    .map(([key, value]) => ({ label: value, value: key, } as SelectOption));
+    .map(([key, value]) => ({ label: value, value: value, } as SelectOption));
 
   return (
-    <div className="flex flex-col gap-5 p-0">
+    <div className="flex flex-col gap-6 p-0">
       <FormField
         name="nome"
         control={form.control}
@@ -33,44 +28,16 @@ export function CadastrosBasicos() {
         )}
       />
 
-      <div className="flex gap-5">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <FormField
           name="dataNascimento"
           control={form.control}
           render={({ field }) => (
-            <FormItem className="flex flex-col gap-1.5 pt-1">
-              <FormLabel>Data de nascimento</FormLabel>
-              <Popover>
-                <PopoverTrigger asChild>
-                  <FormControl>
-                    <Button
-                      variant={"outline"}
-                      className={cn(
-                        "w-[240px] pl-3 h-10 text-left font-normal",
-                        !field.value && "text-muted-foreground"
-                      )}
-                    >
-                      {field.value
-                        ? (format(field.value, "dd 'de' MMMM 'de' yyyy", { locale: ptBR }))
-                        : (<span>Insira sua data de nascimento</span>)}
-                      <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                    </Button>
-                  </FormControl>
-                </PopoverTrigger>
-
-                <PopoverContent className="w-auto p-0" align="start">
-                  <Calendar
-                    mode="single"
-                    selected={field.value as unknown as Date}
-                    onSelect={(value) => field.onChange(value?.toString())}
-                    disabled={(date) => date > new Date() || date < new Date("1900-01-01")}
-                    initialFocus
-                  />
-                </PopoverContent>
-              </Popover>
-
-              <FormMessage />
-            </FormItem>
+            <FormDatePicker
+              field={field}
+              label="Data de nascimento"
+              placeholder="Ex: 01/01/2000"
+            />
           )}
         />
 
@@ -78,11 +45,9 @@ export function CadastrosBasicos() {
           name="numeroTelefone"
           control={form.control}
           render={({ field }) => (
-            <FormInput
-              type="tel"
+            <FormInputTelefone
               label="Número de telefone"
-              placeholder="Insira seu número"
-              {...field}
+              field={field}
             />
           )}
         />
@@ -105,10 +70,10 @@ export function CadastrosBasicos() {
           control={form.control}
           render={({ field }) => (
             <FormInput
-              type="number"
+              type="text"
               label="Filhos"
               placeholder="Insira o número de filhos"
-              className="flex-1 min-w-full"
+              className="min-w-full h-10"
               {...field}
             />
           )}

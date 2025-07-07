@@ -1,7 +1,10 @@
-import { FormSelect, SelectOption } from "@/components/molecules/form/form-select";
+import { FormCombobox } from "@/components/molecules/form/form-combobox";
+import { FormMultiSelect } from "@/components/molecules/form/form-multi-select";
+import { SelectOption } from "@/components/molecules/form/form-select";
 import { FormField } from "@/components/ui/form";
 import { ErroUtil } from "@/lib/erros/erro-util";
-import { pastoralService } from "@/services/equipista-service copy";
+import { encontroService } from "@/services/encontro-service";
+import { pastoralService } from "@/services/pastoral-service";
 import { EquipistaReqDto } from "@/types/dtos/services/equipista";
 import { ESacramento } from "@/types/enums/app";
 import { RotasApiEnum } from "@/types/enums/rotas-api-enum";
@@ -21,29 +24,54 @@ export function ExtrasEquipistaForm() {
     }
   }
 
+  async function fetchEncontros() {
+    try {
+      const response = await encontroService.findAll()
+      return (response as any)?.content || response || []
+    } catch (error) {
+      ErroUtil.tratar(error)
+      return []
+    }
+  }
+
   const { data: pastorais } = useQuery({
     queryKey: [RotasApiEnum.PASTORAL],
     queryFn: fetchPastorais
   })
 
-  const profissaoOptions = Array.isArray(pastorais)
+  const { data: encontros, isLoading: isLoadingEncontros, error: errorEncontros } = useQuery({
+    queryKey: [RotasApiEnum.ENCONTROS],
+    queryFn: fetchEncontros
+  })
+
+
+
+  const pastoraisOptions = Array.isArray(pastorais)
     ? pastorais.map((pastoral: any) => ({ label: pastoral.nome, value: pastoral.id } as SelectOption))
     : [];
 
   const sacramentosOptions = Object.entries(ESacramento)
-    .map(([key, value]) => ({ label: value, value: key } as SelectOption));
+    .map(([key, value]) => ({ label: value, value: value } as SelectOption));
+
+
+
+  const encontrosOptions = Array.isArray(encontros)
+    ? encontros.map((encontro: any) => ({ label: encontro.nome, value: encontro.id } as SelectOption))
+    : [];
+
+
 
   return (
-    <div className="flex flex-col gap-5 p-0">
+    <div className="flex flex-col gap-6 p-0">
       <FormField
-        name="pastorais"
+        name="idPastorais"
         control={form.control}
         render={({ field }) => (
-          <FormSelect
-            field={field as never}
+          <FormMultiSelect
+            field={field}
             label="Participação em pastorais"
-            opcoes={profissaoOptions}
-            placeholder="Insira as pastorais em qual você faz parte"
+            opcoes={pastoraisOptions}
+            placeholder="Selecione as pastorais em qual você faz parte"
           />
         )}
       />
@@ -52,26 +80,51 @@ export function ExtrasEquipistaForm() {
         name="sacramento"
         control={form.control}
         render={({ field }) => (
-          <FormSelect
-            field={field as never}
+          <FormCombobox
+            field={field}
+            showTooltip={true}
             label="Sacramentos"
             opcoes={sacramentosOptions}
-            placeholder="Insira os sacramentos recebidos"
+            placeholder="Selecione seu último sacramento recebido"
+            tooltipContent="Considere a sequência: Batismo → Eucaristia → Crisma → etc."
           />
         )}
       />
 
       <FormField
-        name="participacoesEncontros"
+        name="participacoesEncontro"
         control={form.control}
-        render={({ field }) => (
-          <FormSelect
-            field={field as never}
-            label="Participação em encontros"
-            opcoes={[]}
-            placeholder="Selecione suas participações em encontros"
-          />
-        )}
+        render={({ field }) => {
+          // Converte IDs para objetos completos quando necessário
+          const handleValueChange = (selectedIds: number[]) => {
+            const participacoes = selectedIds.map(id => ({
+              idEquipe: id,
+              ano: new Date().getFullYear(),
+              tipoParticipacao: 'Encontrista',
+              acaoParticipacaoEncontro: undefined
+            }));
+
+            field.onChange(participacoes);
+          };
+
+          // Extrai IDs dos objetos para exibição
+          const selectedIds = Array.isArray(field.value) 
+            ? field.value.map(p => typeof p === 'object' ? p.idEquipe : p)
+            : [];
+
+          return (
+            <FormMultiSelect
+              field={{
+                ...field,
+                value: selectedIds,
+                onChange: handleValueChange
+              }}
+              label="Participação em encontros"
+              opcoes={encontrosOptions}
+              placeholder="Selecione suas participações em encontros"
+            />
+          );
+        }}
       />
     </div>
   )

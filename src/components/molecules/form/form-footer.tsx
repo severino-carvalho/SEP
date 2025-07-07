@@ -14,14 +14,20 @@ interface FormFooterProps extends ComponentProps<'div'>, Partial<FormState<never
  */
 export function FormFooter({ href, isEdicao = false, isSubmitting, ...props }: FormFooterProps) {
   return (
-    <div {...props} className={cn("flex gap-2.5", props.className)}>
-      <Button type="submit" disabled={isSubmitting}>
+    <div {...props} className={cn("flex gap-3 justify-end", props.className)}>
+      <Link to={href}>
+        <Button type="button" variant="ghost" className="hover:bg-muted">
+          Cancelar
+        </Button>
+      </Link>
+
+      <Button
+        type="submit"
+        disabled={isSubmitting}
+        className="min-w-[120px]"
+      >
         {isEdicao ? "Atualizar" : "Adicionar"}
       </Button>
-
-      <Link to={href}>
-        <Button type="button" variant="outline">Cancelar</Button>
-      </Link>
     </div>
   )
 }

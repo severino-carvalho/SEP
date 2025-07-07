@@ -5,28 +5,31 @@ export interface EquipistaResDto extends EntidadeDto {
 	foto?: string;
 	nome: string;
 	dataNascimento: string;
-	endereco?: EnderecoDto;
+	enderecoDTO?: EnderecoDto;
 	numeroTelefone: string;
-	areaAtuacao?: AreaAtuacaoDto;
+	areaAtuacaoDTO?: AreaAtuacaoDto;
 	estadoCivil: EEstadoCivil;
-	filhos?: string;
+	filhos?: number | null;
 	pastorais?: PastoralDto[];
-	sacramento?: ESacramento[];
-	participacoesEncontros?: ParticipacaoEncontroDto[];
+	sacramento?: ESacramento;
+	participacoesEncontro?: ParticipacaoEncontroDto[];
 }
 
 export interface EnderecoDto {
-	rua: string;
+	logradouro: string;
 	cep: string;
 	numero: string;
 	bairro: string;
 	cidade: string;
 	estado: string;
+	complemento?: string;
 }
 
 export interface AreaAtuacaoDto {
-	nome: string;
-	descricao?: string;
+	formacao: string;
+	ocupacao: string;
+	profissao: string;
+	habilidades?: string;
 }
 
 export interface PastoralDto {
@@ -36,7 +39,9 @@ export interface PastoralDto {
 
 export interface ParticipacaoEncontroDto {
 	id: number;
-	encontroId: number;
-	equipistaId: number;
-	dataParticipacao: string;
+	nomeEncontro: string;
+	idEquipe: number;
+	nomeEquipe: string;
+	ano: number | null;
+	tipoParticipacao: string;
 }

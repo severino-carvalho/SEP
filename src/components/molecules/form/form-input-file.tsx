@@ -34,8 +34,8 @@ export function FormInputFile({ descricao, field, label, ...props }: FormInputPr
   }
 
   return (
-    <FormItem className="w-full">
-      <FormLabel>{label}</FormLabel>
+    <FormItem className="flex flex-col w-full">
+      {label && <FormLabel>{label}</FormLabel>}
 
       <FormControl>
         <Input type="file" {...props} onChange={handleChange} />

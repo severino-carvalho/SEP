@@ -4,15 +4,15 @@ import { z } from "zod";
 function createEnumSchema<T extends Record<string, string>>(enumObj: T) {
   return z.union([
     z.nativeEnum(enumObj),
-    z.enum(Object.keys(enumObj) as [keyof T, ...Array<keyof T>])
+    z.enum(Object.keys(enumObj) as [string, ...string[]])
   ]);
 }
 
 const fileBaseDTOSchema = z.object({
   id: z.number().optional(),
-  fileName: z.string().optional(),
-  fileType: z.string().optional(),
-  fileData: z.array(z.number()).optional(),
+  fileName: z.string().nullable().optional(),
+  fileType: z.string().nullable().optional(),
+  fileData: z.array(z.number()).nullable().optional(),
 });
 
 export const enderecoDTOSchema = z.object({
@@ -20,8 +20,7 @@ export const enderecoDTOSchema = z.object({
     .min(1, { message: "Informe o logradouro" })
     .max(255, { message: "Limite de caracteres atingido" }),
   cep: z.string({ required_error: "Informe o CEP" })
-    .min(8, { message: "CEP inválido" })
-    .max(9, { message: "CEP inválido" }),
+    .regex(/^\d{8}$/, { message: "O CEP deve conter 8 dígitos" }),
   numero: z.string({ required_error: "Informe o número" })
     .min(1, { message: "Informe o número" })
     .max(10, { message: "Limite de caracteres atingido" }),
@@ -44,7 +43,7 @@ export const areaAtuacaoDTOSchema = z.object({
     .min(1, { message: "Informe a ocupação" }),
   profissao: z.string({ required_error: "A profissão é obrigatória" })
     .min(1, { message: "Informe a profissão" }),
-  habilidades: z.string(),
+  habilidades: z.string().optional(),
 });
 
 export const pastoralDTOSchema = z.object({
@@ -52,16 +51,7 @@ export const pastoralDTOSchema = z.object({
   nome: z.string(),
 });
 
-export const participacaoEncontroDTOSchema = z.object({
-  id: z.number().optional(),
-  encontroId: z.number(),
-  nomeEncontro: z.string(),
-  equipeId: z.number(),
-  nomeEquipe: z.string(),
-  equipistaId: z.number(),
-  anoParticipacao: z.number(),
-  tipoParticipacao: z.string(),
-});
+
 
 // Create the enum schemas using the utility function
 const estadoCivilSchema = createEnumSchema(EEstadoCivil);
@@ -71,21 +61,25 @@ export const equipistaDTOSchema = fileBaseDTOSchema.extend({
   nome: z.string({ required_error: "Informe o nome" })
     .min(1, { message: "Informe o nome" })
     .max(255, { message: "Limite de caracteres atingido" }),
-  dataNascimento: z.string({ required_error: "Informe a data de nascimento" }),
-  enderecoDTO: enderecoDTOSchema,
+  dataNascimento: z.date({ required_error: "Informe a data de nascimento" })
+    .refine((date) => date <= new Date(), { message: "A data de nascimento não pode ser no futuro" })
+    .refine((date) => date >= new Date("1900-01-01"), { message: "Data de nascimento inválida" }),
+  endereco: enderecoDTOSchema,
   numeroTelefone: z.string({ required_error: "Informe o número de telefone" })
-    .min(1, { message: "Informe o número de telefone" }),
-  areaAtuacaoDTO: areaAtuacaoDTOSchema,
-  estadoCivil: estadoCivilSchema, // Using the custom enum schema
+    .min(1, { message: "Informe o número de telefone" })
+    .regex(/^\d{11}$/, { message: "O número de telefone deve conter 11 dígitos" }),
+  areaAtuacao: areaAtuacaoDTOSchema,
+  estadoCivil: z.string({ required_error: "O estado civil é obrigatório" }),
   filhos: z.string().optional(),
-  sacramento: sacramentoSchema.optional(), // Using the custom enum schema
-  pastoraisDTO: z.array(pastoralDTOSchema).optional(),
-  participacoesEncontrosDTO: z.array(participacaoEncontroDTOSchema).optional(),
+  idPastorais: z.array(z.number()).optional(),
+  sacramento: z.string().optional(),
+  participacoesEncontro: z.array(z.object({
+    idEquipe: z.number(),
+    ano: z.number(),
+    tipoParticipacao: z.string(),
+    acaoParticipacaoEncontro: z.string().optional()
+  })).optional().default([]),
+  arquivo: z.instanceof(File).optional(),
 });
 
-export const equipistaFormSchema = equipistaDTOSchema.extend({
-  filhos: z.coerce.number()
-    .min(0, { message: "Informe uma quantidade válida" })
-    .max(50, { message: "Informe uma quantidade válida" })
-    .optional(),
-});
+export const equipistaFormSchema = equipistaDTOSchema;
