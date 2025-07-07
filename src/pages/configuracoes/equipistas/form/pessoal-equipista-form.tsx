@@ -23,6 +23,7 @@ export function CadastrosBasicos() {
             type="text"
             label="Nome"
             placeholder="Insira o nome do equipista"
+            required={true}
             {...field}
           />
         )}
@@ -37,6 +38,7 @@ export function CadastrosBasicos() {
               field={field}
               label="Data de nascimento"
               placeholder="Ex: 01/01/2000"
+              required={true}
             />
           )}
         />
@@ -48,6 +50,7 @@ export function CadastrosBasicos() {
             <FormInputTelefone
               label="Número de telefone"
               field={field}
+              required={true}
             />
           )}
         />
@@ -61,6 +64,7 @@ export function CadastrosBasicos() {
               label="Estado civil"
               opcoes={estadoCivilOptions}
               placeholder="Selecione um estado civil"
+              required={true}
             />
           )}
         />

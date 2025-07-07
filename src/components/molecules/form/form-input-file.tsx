@@ -15,6 +15,7 @@ interface FormInputProps extends ComponentProps<'input'> {
   label: string
   descricao?: string
   field: ControllerRenderProps<any>
+  required?: boolean
 }
 
 /**
@@ -27,7 +28,7 @@ interface FormInputProps extends ComponentProps<'input'> {
  * @param {React.Ref<HTMLInputElement>} ref - A referência para o elemento de entrada.
  * @returns {JSX.Element} O componente FormInputFile.
  */
-export function FormInputFile({ descricao, field, label, ...props }: FormInputProps) {
+export function FormInputFile({ descricao, field, label, required, ...props }: FormInputProps) {
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files
     if (!!files && files?.length !== 0) field?.onChange(files[0])
@@ -35,7 +36,7 @@ export function FormInputFile({ descricao, field, label, ...props }: FormInputPr
 
   return (
     <FormItem className="flex flex-col w-full">
-      {label && <FormLabel>{label}</FormLabel>}
+      {label && <FormLabel required={required}>{label}</FormLabel>}
 
       <FormControl>
         <Input type="file" {...props} onChange={handleChange} />

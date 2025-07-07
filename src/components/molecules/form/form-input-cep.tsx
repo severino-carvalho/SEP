@@ -7,9 +7,10 @@ interface FormInputCepProps extends ComponentProps<'input'> {
   label?: string
   descricao?: string
   field?: ControllerRenderProps<any>
+  required?: boolean
 }
 
-export function FormInputCep({ descricao, label, field, ...props }: FormInputCepProps) {
+export function FormInputCep({ descricao, label, field, required, ...props }: FormInputCepProps) {
   const [displayValue, setDisplayValue] = useState('');
 
   // Função para aplicar máscara de CEP brasileiro
@@ -67,7 +68,7 @@ export function FormInputCep({ descricao, label, field, ...props }: FormInputCep
 
   return (
     <FormItem className="flex flex-col">
-      <FormLabel>{label}</FormLabel>
+      <FormLabel required={required}>{label}</FormLabel>
       <FormControl>
         <Input
           {...props}

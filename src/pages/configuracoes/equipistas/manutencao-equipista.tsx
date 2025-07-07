@@ -102,8 +102,7 @@ export function ManutencaoEquipista() {
         participacoesEncontro: equipista.participacoesEncontro ? equipista.participacoesEncontro.map(p => ({
           idEquipe: p.idEquipe,
           ano: p.ano || new Date().getFullYear(),
-          tipoParticipacao: p.tipoParticipacao || 'Encontrista',
-          acaoParticipacaoEncontro: p.acaoParticipacaoEncontro || undefined
+          tipoParticipacao: p.tipoParticipacao || 'Encontrista'
         })) : []
       }
 

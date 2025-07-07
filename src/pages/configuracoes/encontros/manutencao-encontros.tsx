@@ -118,6 +118,7 @@ export function ManutencaoEncontros() {
                   type="text"
                   label="Nome"
                   placeholder="Insira o nome do encontro"
+                  required={true}
                   {...field}
                 />
               )}

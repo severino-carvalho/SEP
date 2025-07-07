@@ -30,6 +30,7 @@ export function AreaAtuacaoFrom() {
               label="Formação"
               opcoes={formacaoOptions}
               placeholder="Selecione sua formação"
+              required={true}
             />
           )}
         />
@@ -43,6 +44,7 @@ export function AreaAtuacaoFrom() {
               label="Ocupação"
               opcoes={ocupacaoOptions}
               placeholder="Selecione sua ocupação"
+              required={true}
             />
           )}
         />
@@ -56,6 +58,7 @@ export function AreaAtuacaoFrom() {
               label="Profissão"
               opcoes={profissaoOptions}
               placeholder="Selecione sua profissão"
+              required={true}
             />
           )}
         />

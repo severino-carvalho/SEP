@@ -208,6 +208,7 @@ export function ManutencaoEquipes() {
                   type="text"
                   label="Nome"
                   placeholder="Insira o nome da equipe"
+                  required={true}
                   {...field}
                 />
               )}
@@ -229,6 +230,7 @@ export function ManutencaoEquipes() {
                   isLoading={isFetching}
                   opcoes={converterEquipeToSelectvalues(encontros || [])}
                   placeholder="Selecione um encontro"
+                  required={true}
                 />
               )}
             />

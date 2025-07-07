@@ -7,12 +7,13 @@ interface FormInputProps extends ComponentProps<'input'> {
   label?: string
   descricao?: string
   field?: ControllerRenderProps<any>
+  required?: boolean
 }
 
-export function FormInput({ descricao, label, ...props }: FormInputProps) {
+export function FormInput({ descricao, label, required, ...props }: FormInputProps) {
   return (
     <FormItem className="flex flex-col">
-      <FormLabel>{label}</FormLabel>
+      <FormLabel required={required}>{label}</FormLabel>
       <FormControl>
         <Input {...props} />
       </FormControl>

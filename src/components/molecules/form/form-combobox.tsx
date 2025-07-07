@@ -22,6 +22,7 @@ interface FormComboboxProps extends ComponentProps<'div'> {
   isLoading?: boolean
   showTooltip?: boolean
   tooltipContent?: string
+  required?: boolean
 }
 
 export function FormCombobox({
@@ -33,6 +34,7 @@ export function FormCombobox({
   isLoading,
   showTooltip = false,
   tooltipContent,
+  required,
   className,
   ...props
 }: FormComboboxProps) {
@@ -52,7 +54,7 @@ export function FormCombobox({
   return (
     <FormItem className={cn("flex flex-col flex-1", className)} {...props}>
       <div className="flex items-center gap-2">
-        {label && <FormLabel>{label}</FormLabel>}
+        {label && <FormLabel required={required}>{label}</FormLabel>}
 
         {showTooltip && tooltipContent && (
           <TooltipProvider>

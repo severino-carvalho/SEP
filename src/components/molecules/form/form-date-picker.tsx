@@ -13,12 +13,13 @@ interface FormInputProps extends ComponentProps<'input'> {
   label?: string
   descricao?: string
   field: ControllerRenderProps<any>
+  required?: boolean
 }
 
-export function FormDatePicker({ field, label, descricao, ...props }: FormInputProps) {
+export function FormDatePicker({ field, label, descricao, required, ...props }: FormInputProps) {
   return (
     <FormItem className="flex flex-col flex-1">
-      {label && <FormLabel>{label}</FormLabel>}
+      {label && <FormLabel required={required}>{label}</FormLabel>}
 
       <Popover>
         <PopoverTrigger asChild>

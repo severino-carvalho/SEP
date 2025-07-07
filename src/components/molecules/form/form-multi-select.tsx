@@ -20,6 +20,7 @@ interface FormMultiSelectProps extends ComponentProps<'div'> {
   opcoes: SelectOption[]
   field: ControllerRenderProps<any>
   isLoading?: boolean
+  required?: boolean
 }
 
 export function FormMultiSelect({
@@ -29,6 +30,7 @@ export function FormMultiSelect({
   opcoes = [],
   field,
   isLoading,
+  required,
   className,
   ...props
 }: FormMultiSelectProps) {
@@ -78,7 +80,7 @@ export function FormMultiSelect({
 
   return (
     <FormItem className={cn("flex flex-col flex-1", className)} {...props}>
-      {label && <FormLabel>{label}</FormLabel>}
+      {label && <FormLabel required={required}>{label}</FormLabel>}
 
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>

@@ -15,6 +15,7 @@ interface FormSelectProps extends ComponentProps<'select'> {
   opcoes: SelectOption[]
   field: ControllerRenderProps
   isLoading?: boolean
+  required?: boolean
 }
 
 export function FormSelect({
@@ -24,6 +25,7 @@ export function FormSelect({
   opcoes,
   field,
   isLoading,
+  required,
 }: FormSelectProps) {
   function onValueChange(opcao: string) {
     if (opcao) field.onChange(opcao)
@@ -31,7 +33,7 @@ export function FormSelect({
 
   return (
     <FormItem className="flex flex-col flex-1">
-      <FormLabel>{label}</FormLabel>
+      <FormLabel required={required}>{label}</FormLabel>
 
       <Select onValueChange={onValueChange} value={field.value?.toString()}>
         <FormControl>

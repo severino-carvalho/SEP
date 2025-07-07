@@ -17,6 +17,7 @@ export function EnderecoEquipistaForm() {
             type="text"
             label="Logradouro"
             placeholder="Insira o logradouro"
+            required={true}
             {...field}
           />
         )}
@@ -30,6 +31,7 @@ export function EnderecoEquipistaForm() {
             <FormInputCep
               label="CEP"
               field={field}
+              required={true}
             />
           )}
         />
@@ -42,6 +44,7 @@ export function EnderecoEquipistaForm() {
               type="text"
               label="Número"
               placeholder="Insira o número"
+              required={true}
               {...field}
             />
           )}
@@ -55,6 +58,7 @@ export function EnderecoEquipistaForm() {
               type="text"
               label="Bairro"
               placeholder="Insira o bairro"
+              required={true}
               {...field}
             />
           )}
@@ -69,6 +73,7 @@ export function EnderecoEquipistaForm() {
             <FormInput
               label="Cidade"
               placeholder="Insira a cidade"
+              required={true}
               {...field}
             />
           )}
@@ -81,6 +86,7 @@ export function EnderecoEquipistaForm() {
             <FormInput
               label="Estado"
               placeholder="Insira o estado"
+              required={true}
               {...field}
             />
           )}

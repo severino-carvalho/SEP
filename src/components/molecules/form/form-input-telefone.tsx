@@ -7,9 +7,10 @@ interface FormInputTelefoneProps extends ComponentProps<'input'> {
   label?: string
   descricao?: string
   field?: ControllerRenderProps<any>
+  required?: boolean
 }
 
-export function FormInputTelefone({ descricao, label, field, ...props }: FormInputTelefoneProps) {
+export function FormInputTelefone({ descricao, label, field, required, ...props }: FormInputTelefoneProps) {
   const [displayValue, setDisplayValue] = useState('');
 
   const applyPhoneMask = (value: string): string => {
@@ -49,7 +50,7 @@ export function FormInputTelefone({ descricao, label, field, ...props }: FormInp
 
   return (
     <FormItem className="flex flex-col">
-      {label && <FormLabel>{label}</FormLabel>}
+      {label && <FormLabel required={required}>{label}</FormLabel>}
 
       <FormControl>
         <Input
