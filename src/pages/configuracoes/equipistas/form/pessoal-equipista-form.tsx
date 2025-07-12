@@ -11,7 +11,7 @@ export function CadastrosBasicos() {
   const form = useFormContext<EquipistaReqDto>()
 
   const estadoCivilOptions = Object.entries(EEstadoCivil)
-    .map(([key, value]) => ({ label: value, value: value, } as SelectOption));
+    .map(([key, value]) => ({ label: value, value: key, } as SelectOption));
 
   return (
     <div className="flex flex-col gap-6 p-0">

@@ -6,7 +6,7 @@ import { ErroUtil } from "@/lib/erros/erro-util";
 import { encontroService } from "@/services/encontro-service";
 import { pastoralService } from "@/services/pastoral-service";
 import { EquipistaReqDto } from "@/types/dtos/services/equipista";
-import { ESacramento } from "@/types/enums/app";
+import { ESacramento, ETipoParticipacao } from "@/types/enums/app";
 import { RotasApiEnum } from "@/types/enums/rotas-api-enum";
 import { useQuery } from "@tanstack/react-query";
 import { useFormContext } from "react-hook-form";
@@ -51,7 +51,7 @@ export function ExtrasEquipistaForm() {
     : [];
 
   const sacramentosOptions = Object.entries(ESacramento)
-    .map(([key, value]) => ({ label: value, value: value } as SelectOption));
+    .map(([key, value]) => ({ label: value, value: key } as SelectOption));
 
 
 
@@ -100,7 +100,7 @@ export function ExtrasEquipistaForm() {
             const participacoes = selectedIds.map(id => ({
               idEquipe: id,
               ano: new Date().getFullYear(),
-              tipoParticipacao: 'Encontrista',
+              tipoParticipacao: 'ENCONTRISTA',
               acaoParticipacaoEncontro: undefined
             }));
 

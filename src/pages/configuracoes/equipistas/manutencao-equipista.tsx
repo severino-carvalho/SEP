@@ -9,6 +9,7 @@ import { equipistaService } from "@/services/equipista-service"
 import { EquipistaReqDto } from "@/types/dtos/services/equipista"
 import { RotasApiEnum } from "@/types/enums/rotas-api-enum"
 import { RotasAppEnum } from "@/types/enums/rotas-app-enum"
+import { EFormacao, EOcupacao, EProfissao, ESacramento, EEstadoCivil, ETipoParticipacao } from "@/types/enums/app"
 import { DevTool } from "@hookform/devtools"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useQuery } from "@tanstack/react-query"
@@ -58,6 +59,11 @@ export function ManutencaoEquipista() {
     }
   })
 
+  // Funções utilitárias para converter valores de enum para chaves
+  function getEnumKeyByValue(enumObj: any, value: string): string | undefined {
+    return Object.keys(enumObj).find(key => enumObj[key] === value);
+  }
+
   async function fetchDadosIniciais(equipeId?: number) {
     if (!equipeId) return
 
@@ -70,8 +76,11 @@ export function ManutencaoEquipista() {
         // Converte dataNascimento para Date
         dataNascimento: equipista.dataNascimento ? new Date(equipista.dataNascimento) : undefined,
 
-        // Mapeia o sacramento corretamente
-        sacramento: equipista.sacramento || undefined,
+        // Mapeia o sacramento corretamente (converte valor para chave do enum)
+        sacramento: equipista.sacramento ? getEnumKeyByValue(ESacramento, equipista.sacramento) : undefined,
+
+        // Mapeia o estado civil (converte valor para chave do enum)
+        estadoCivil: equipista.estadoCivil ? getEnumKeyByValue(EEstadoCivil, equipista.estadoCivil) : undefined,
 
         // Mapeia o campo filhos (converte null para string vazia)
         filhos: equipista.filhos?.toString() || '',
@@ -87,11 +96,11 @@ export function ManutencaoEquipista() {
           estado: equipista.enderecoDTO.estado || ''
         } : undefined,
 
-        // Mapeia areaAtuacaoDTO para areaAtuacao
+        // Mapeia areaAtuacaoDTO para areaAtuacao (converte valores para chaves dos enums)
         areaAtuacao: equipista.areaAtuacaoDTO ? {
-          formacao: equipista.areaAtuacaoDTO.formacao || '',
-          ocupacao: equipista.areaAtuacaoDTO.ocupacao || '',
-          profissao: equipista.areaAtuacaoDTO.profissao || '',
+          formacao: equipista.areaAtuacaoDTO.formacao ? getEnumKeyByValue(EFormacao, equipista.areaAtuacaoDTO.formacao) : '',
+          ocupacao: equipista.areaAtuacaoDTO.ocupacao ? getEnumKeyByValue(EOcupacao, equipista.areaAtuacaoDTO.ocupacao) : '',
+          profissao: equipista.areaAtuacaoDTO.profissao ? getEnumKeyByValue(EProfissao, equipista.areaAtuacaoDTO.profissao) : '',
           habilidades: equipista.areaAtuacaoDTO.habilidades || ''
         } : undefined,
 
@@ -102,7 +111,7 @@ export function ManutencaoEquipista() {
         participacoesEncontro: equipista.participacoesEncontro ? equipista.participacoesEncontro.map(p => ({
           idEquipe: p.idEquipe,
           ano: p.ano || new Date().getFullYear(),
-          tipoParticipacao: p.tipoParticipacao || 'Encontrista'
+          tipoParticipacao: p.tipoParticipacao ? getEnumKeyByValue(ETipoParticipacao, p.tipoParticipacao) : 'ENCONTRISTA'
         })) : []
       }
 

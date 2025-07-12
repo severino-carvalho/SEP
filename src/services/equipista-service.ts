@@ -37,9 +37,13 @@ class EquipistaService extends SEPApiService<EquipistaReqDto, EquipistaResDto> {
 
     const formData = jsonToFormData(data)
     
-    // Adiciona arquivo se existir
+    // Adiciona arquivo se existir, senão adiciona um arquivo vazio
     if (data.arquivo) {
       formData.append('arquivo', data.arquivo)
+    } else {
+      // Cria um arquivo vazio para satisfazer a exigência do backend
+      const emptyFile = new File([''], 'empty.txt', { type: 'text/plain' })
+      formData.append('arquivo', emptyFile)
     }
 
     const { data: responseData } = await this.serverAPI.post<EquipistaResDto>(
@@ -85,9 +89,13 @@ class EquipistaService extends SEPApiService<EquipistaReqDto, EquipistaResDto> {
 
     const formData = jsonToFormData(data)
     
-    // Adiciona arquivo se existir
+    // Adiciona arquivo se existir, senão adiciona um arquivo vazio
     if (data.arquivo) {
       formData.append('arquivo', data.arquivo)
+    } else {
+      // Cria um arquivo vazio para satisfazer a exigência do backend
+      const emptyFile = new File([''], 'empty.txt', { type: 'text/plain' })
+      formData.append('arquivo', emptyFile)
     }
 
     const { data: responseData } = await this.serverAPI.put<EquipistaResDto>(

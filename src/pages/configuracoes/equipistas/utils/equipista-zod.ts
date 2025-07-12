@@ -1,4 +1,4 @@
-import { EEstadoCivil, ESacramento } from "@/types/enums/app";
+import { EEstadoCivil, ESacramento, EFormacao, EOcupacao, EProfissao, ETipoParticipacao } from "@/types/enums/app";
 import { z } from "zod";
 
 function createEnumSchema<T extends Record<string, string>>(enumObj: T) {
@@ -36,13 +36,17 @@ export const enderecoDTOSchema = z.object({
   complemento: z.string().max(255, { message: "Limite de caracteres atingido" }).optional(),
 });
 
+const estadoCivilSchema = createEnumSchema(EEstadoCivil);
+const sacramentoSchema = createEnumSchema(ESacramento);
+const formacaoSchema = createEnumSchema(EFormacao);
+const ocupacaoSchema = createEnumSchema(EOcupacao);
+const profissaoSchema = createEnumSchema(EProfissao);
+const tipoParticipacaoSchema = createEnumSchema(ETipoParticipacao);
+
 export const areaAtuacaoDTOSchema = z.object({
-  formacao: z.string({ required_error: "A formação é obrigatória" })
-    .min(1, { message: "Informe a formação" }),
-  ocupacao: z.string({ required_error: "A ocupação é obrigatória" })
-    .min(1, { message: "Informe a ocupação" }),
-  profissao: z.string({ required_error: "A profissão é obrigatória" })
-    .min(1, { message: "Informe a profissão" }),
+  formacao: formacaoSchema,
+  ocupacao: ocupacaoSchema,
+  profissao: profissaoSchema,
   habilidades: z.string().optional(),
 });
 
@@ -50,12 +54,6 @@ export const pastoralDTOSchema = z.object({
   id: z.number(),
   nome: z.string(),
 });
-
-
-
-// Create the enum schemas using the utility function
-const estadoCivilSchema = createEnumSchema(EEstadoCivil);
-const sacramentoSchema = createEnumSchema(ESacramento);
 
 export const equipistaDTOSchema = fileBaseDTOSchema.extend({
   nome: z.string({ required_error: "Informe o nome" })
@@ -69,14 +67,14 @@ export const equipistaDTOSchema = fileBaseDTOSchema.extend({
     .min(1, { message: "Informe o número de telefone" })
     .regex(/^\d{11}$/, { message: "O número de telefone deve conter 11 dígitos" }),
   areaAtuacao: areaAtuacaoDTOSchema,
-  estadoCivil: z.string({ required_error: "O estado civil é obrigatório" }),
+  estadoCivil: estadoCivilSchema,
   filhos: z.string().optional(),
   idPastorais: z.array(z.number()).optional(),
-  sacramento: z.string().optional(),
+  sacramento: sacramentoSchema.optional(),
   participacoesEncontro: z.array(z.object({
     idEquipe: z.number(),
     ano: z.number(),
-    tipoParticipacao: z.string(),
+    tipoParticipacao: tipoParticipacaoSchema,
     acaoParticipacaoEncontro: z.string().optional()
   })).optional().default([]),
   arquivo: z.instanceof(File).optional(),

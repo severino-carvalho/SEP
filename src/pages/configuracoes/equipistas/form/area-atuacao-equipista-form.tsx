@@ -10,13 +10,13 @@ export function AreaAtuacaoFrom() {
   const form = useFormContext<EquipistaReqDto>()
 
   const formacaoOptions = Object.entries(EFormacao)
-    .map(([_  , value]) => ({ label: value, value: value } as SelectOption));
+    .map(([key, value]) => ({ label: value, value: key } as SelectOption));
 
   const ocupacaoOptions = Object.entries(EOcupacao)
-    .map(([_, value]) => ({ label: value, value: value } as SelectOption));
+    .map(([key, value]) => ({ label: value, value: key } as SelectOption));
 
   const profissaoOptions = Object.entries(EProfissao)
-    .map(([_, value]) => ({ label: value, value: value } as SelectOption));
+    .map(([key, value]) => ({ label: value, value: key } as SelectOption));
 
   return (
     <div className="flex flex-col gap-6 p-0">

@@ -20,8 +20,8 @@ export enum ESacramento {
 export enum EFormacao {
   NIVEL_FUNDAMENTAL = "Nível Fundamental",
   NIVEL_MEDIO = "Nível Médio",
-  NIVEL_SUPERIOR_CURSANDO = "Nível Superior - Cursando",
-  NIVEL_SUPERIOR_COMPLETO = "Nível Superior - Completo",
+  NIVEL_SUPERIOR_CURSANDO = "Nível Superior cursando",
+  NIVEL_SUPERIOR_COMPLETO = "Nível Superior completo",
   ESPECIALIZACAO = "Especialização",
   MESTRADO = "Mestrado",
   DOUTORADO = "Doutorado",
@@ -92,4 +92,12 @@ export enum EProfissao {
   VENDEDOR = "Vendedor/a",
   VETERINARIO = "Veterinário/a",
   OUTRA = "Outra"
+}
+
+export enum ETipoParticipacao {
+  CASAL_COORDENADOR = "Casal Coordenador",
+  EQUIPISTA_COORDENADOR = "Equipista Coordenador",
+  CASAL = "Casal",
+  EQUIPISTA = "Equipista",
+  ENCONTRISTA = "Encontrista",
 }

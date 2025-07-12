@@ -85,7 +85,6 @@ export function Login() {
                   label="Email"
                   placeholder="Insira o seu email"
                   autoComplete="off"
-                  required={true}
                 />
               )}
             />
@@ -99,7 +98,6 @@ export function Login() {
                   type="password"
                   label="Senha"
                   placeholder="Insira sua senha"
-                  required={true}
                 />
               )}
             />
