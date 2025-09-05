@@ -6,7 +6,7 @@ import { Outlet } from 'react-router-dom'
 import { ContainerLayout } from './container-layout'
 
 export default function AppLayout({ children }: Readonly<Partial<IChildren>>) {
-	const [sidebarOpen, setSidebarOpen] = useState(true)
+	const [sidebarOpen, setSidebarOpen] = useState(false)
 
 	function handleSidebarOpen() {
 		setSidebarOpen(isOpen => !isOpen)
