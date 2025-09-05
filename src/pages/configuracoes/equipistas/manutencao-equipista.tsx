@@ -1,18 +1,19 @@
 import { BreadcrumbListType } from "@/components/atoms/breadcrumb"
 import { FormFooter } from "@/components/molecules/form/form-footer"
+import { FormInputFile } from "@/components/molecules/form/form-input-file"
 import { ContainerPage } from "@/components/templates/container-page"
-import { Form } from "@/components/ui/form"
+import { Form, FormField } from "@/components/ui/form"
 import { ErroUtil } from "@/lib/erros/erro-util"
-import { queryClient } from "@/lib/useQuery/query-client"
 import { toastService } from "@/lib/useQuery/toast-service"
 import { equipistaService } from "@/services/equipista-service"
 import { EquipistaReqDto } from "@/types/dtos/services/equipista"
+import { EEstadoCivil, EFormacao, EOcupacao, EProfissao, ESacramento, ETipoParticipacao } from "@/types/enums/app"
 import { RotasApiEnum } from "@/types/enums/rotas-api-enum"
 import { RotasAppEnum } from "@/types/enums/rotas-app-enum"
-import { EFormacao, EOcupacao, EProfissao, ESacramento, EEstadoCivil, ETipoParticipacao } from "@/types/enums/app"
 import { DevTool } from "@hookform/devtools"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useQuery } from "@tanstack/react-query"
+import { useEffect } from "react"
 import { useForm } from "react-hook-form"
 import { useLocation, useNavigate } from "react-router-dom"
 import { AreaAtuacaoFrom } from "./form/area-atuacao-equipista-form"
@@ -20,8 +21,6 @@ import { EnderecoEquipistaForm } from "./form/endereco-equipista-form"
 import { CadastrosBasicos } from "./form/pessoal-equipista-form"
 import { ExtrasEquipistaForm } from "./form/vida-crista-equipista-form"
 import { equipistaFormSchema } from "./utils/equipista-zod"
-import { FormField } from "@/components/ui/form"
-import { FormInputFile } from "@/components/molecules/form/form-input-file"
 
 const listaItensBreadcrumb: BreadcrumbListType[] = [
   { titulo: "Home", href: RotasAppEnum.HOME },
@@ -41,27 +40,13 @@ export function ManutencaoEquipista() {
     defaultValues: {
       idPastorais: [],
       participacoesEncontro: [],
-      endereco: {
-        logradouro: '',
-        cep: '',
-        numero: '',
-        bairro: '',
-        cidade: '',
-        estado: '',
-        complemento: ''
-      },
-      areaAtuacao: {
-        formacao: '',
-        ocupacao: '',
-        profissao: '',
-        habilidades: ''
-      }
+      endereco: { logradouro: '', cep: '', numero: '', bairro: '', cidade: '', estado: '', complemento: '' },
+      areaAtuacao: { formacao: '', ocupacao: '', profissao: '', habilidades: '' }
     }
   })
 
-  // Funções utilitárias para converter valores de enum para chaves
-  function getEnumKeyByValue(enumObj: any, value: string): string | undefined {
-    return Object.keys(enumObj).find(key => enumObj[key] === value);
+  function getEnumKeyByValue<T extends Record<string, string>>(enumObj: T, value: string): keyof T | undefined {
+    return Object.keys(enumObj).find(key => key === value) as keyof T | undefined;
   }
 
   async function fetchDadosIniciais(equipeId?: number) {
@@ -70,52 +55,35 @@ export function ManutencaoEquipista() {
     try {
       const equipista = await equipistaService.findById(equipeId)
 
-      // Mapeia os dados do backend para o formato esperado pelo frontend
       const dadosFormatados = {
         ...equipista,
-        // Converte dataNascimento para Date
-        dataNascimento: equipista.dataNascimento ? new Date(equipista.dataNascimento) : undefined,
-
-        // Mapeia o sacramento corretamente (converte valor para chave do enum)
+        dataNascimento: equipista.dataNascimento ? new Date(equipista.dataNascimento + 'T00:00:00') : undefined,
         sacramento: equipista.sacramento ? getEnumKeyByValue(ESacramento, equipista.sacramento) : undefined,
-
-        // Mapeia o estado civil (converte valor para chave do enum)
-        estadoCivil: equipista.estadoCivil ? getEnumKeyByValue(EEstadoCivil, equipista.estadoCivil) : undefined,
-
-        // Mapeia o campo filhos (converte null para string vazia)
-        filhos: equipista.filhos?.toString() || '',
-
-        // Mapeia enderecoDTO para endereco
+        estadoCivil: getEnumKeyByValue(EEstadoCivil, equipista.estadoCivil),
+        filhos: equipista.filhos?.toString(),
         endereco: equipista.enderecoDTO ? {
-          cep: equipista.enderecoDTO.cep || '',
-          logradouro: equipista.enderecoDTO.logradouro || '',
-          numero: equipista.enderecoDTO.numero || '',
-          complemento: equipista.enderecoDTO.complemento || '',
-          bairro: equipista.enderecoDTO.bairro || '',
-          cidade: equipista.enderecoDTO.cidade || '',
-          estado: equipista.enderecoDTO.estado || ''
+          cep: equipista.enderecoDTO.cep?.replace('-', ''),
+          logradouro: equipista.enderecoDTO.logradouro,
+          numero: equipista.enderecoDTO.numero,
+          complemento: equipista.enderecoDTO.complemento,
+          bairro: equipista.enderecoDTO.bairro,
+          cidade: equipista.enderecoDTO.cidade,
+          estado: equipista.enderecoDTO.estado
         } : undefined,
-
-        // Mapeia areaAtuacaoDTO para areaAtuacao (converte valores para chaves dos enums)
         areaAtuacao: equipista.areaAtuacaoDTO ? {
-          formacao: equipista.areaAtuacaoDTO.formacao ? getEnumKeyByValue(EFormacao, equipista.areaAtuacaoDTO.formacao) : '',
-          ocupacao: equipista.areaAtuacaoDTO.ocupacao ? getEnumKeyByValue(EOcupacao, equipista.areaAtuacaoDTO.ocupacao) : '',
-          profissao: equipista.areaAtuacaoDTO.profissao ? getEnumKeyByValue(EProfissao, equipista.areaAtuacaoDTO.profissao) : '',
-          habilidades: equipista.areaAtuacaoDTO.habilidades || ''
+          formacao: getEnumKeyByValue(EFormacao, equipista.areaAtuacaoDTO.formacao),
+          ocupacao: getEnumKeyByValue(EOcupacao, equipista.areaAtuacaoDTO.ocupacao),
+          profissao: getEnumKeyByValue(EProfissao, equipista.areaAtuacaoDTO.profissao),
+          habilidades: equipista.areaAtuacaoDTO.habilidades
         } : undefined,
-
-        // Extrai apenas os IDs das pastorais
         idPastorais: equipista.pastorais ? equipista.pastorais.map(p => p.id) : [],
-
-        // Mapeia as participações em encontros para o formato esperado pelo backend
         participacoesEncontro: equipista.participacoesEncontro ? equipista.participacoesEncontro.map(p => ({
           idEquipe: p.idEquipe,
-          ano: p.ano || new Date().getFullYear(),
-          tipoParticipacao: p.tipoParticipacao ? getEnumKeyByValue(ETipoParticipacao, p.tipoParticipacao) : 'ENCONTRISTA'
-        })) : []
+          ano: p.ano ?? new Date().getFullYear(),
+          tipoParticipacao: getEnumKeyByValue(ETipoParticipacao, p.tipoParticipacao)
+        })) : [],
+        fileData: []
       }
-
-
 
       form.reset(dadosFormatados as unknown as EquipistaReqDto)
     } catch (error) {
@@ -162,6 +130,10 @@ export function ManutencaoEquipista() {
     enabled: !!equipistaId
   })
 
+  useEffect(() => {
+    console.log("ERROS FORM", form.formState.errors)
+  }, [form.formState.errors])
+
   return (
     <ContainerPage className="gap-10" listaItensBreadcrumb={listaItensBreadcrumb}>
       <Form {...form} >
@@ -183,7 +155,6 @@ export function ManutencaoEquipista() {
 
           <ExtrasEquipistaForm />
 
-          {/* Campo de upload de arquivo */}
           <FormField
             name="arquivo"
             control={form.control}

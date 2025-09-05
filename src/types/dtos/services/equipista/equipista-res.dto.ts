@@ -1,8 +1,13 @@
 import { EEstadoCivil, ESacramento } from "@/types/enums/app";
 import { EntidadeDto } from "../../entidade.dto";
 
-export interface EquipistaResDto extends EntidadeDto {
-	foto?: string;
+export interface ArquivoResDto {
+	fileName: string;
+	fileType: string;
+	fileData: string;
+}
+
+export interface EquipistaResDto extends EntidadeDto, ArquivoResDto {
 	nome: string;
 	dataNascimento: string;
 	enderecoDTO?: EnderecoDto;

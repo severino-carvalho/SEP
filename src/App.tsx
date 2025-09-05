@@ -4,7 +4,6 @@ import AppLayout from './components/templates/app-layout'
 import { Contexts } from './contexts'
 import { About } from './pages/about'
 import { Configuracoes } from './pages/configuracoes/configuracoes'
-import { Encontro } from './pages/configuracoes/encontros/encontros'
 import { ManutencaoEncontros } from './pages/configuracoes/encontros/manutencao-encontros'
 import { Equipe } from './pages/configuracoes/equipes/equipe'
 import { ManutencaoEquipes } from './pages/configuracoes/equipes/manutencao-equipe'
@@ -15,6 +14,7 @@ import { Usuario } from './pages/configuracoes/usuarios/usuario'
 import { Home } from './pages/home'
 import { Login } from './pages/login'
 import { RotasAppEnum } from './types/enums/rotas-app-enum'
+import { Encontro } from './pages/configuracoes/encontros/encontros'
 
 export function App() {
 	return (

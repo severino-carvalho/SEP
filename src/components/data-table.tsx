@@ -7,6 +7,13 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Input } from "@/components/ui/input"
 import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+import {
   Table,
   TableBody,
   TableCell,
@@ -14,6 +21,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+import { EntidadeDto } from "@/types/dtos/entidade.dto"
+import { FiltroPaginacao, FiltroPaginacaoResponseDto } from "@/types/dtos/filter"
 import { RotasAppEnum } from "@/types/enums/rotas-app-enum"
 import {
   ColumnDef,
@@ -28,36 +37,145 @@ import {
   useReactTable
 } from "@tanstack/react-table"
 import { ChevronDown, FolderX, Loader2 } from "lucide-react"
-import { Fragment, useState } from "react"
+import { Fragment, useMemo, useState } from "react"
 import { Link } from "react-router-dom"
 
-export type DataTableProps<T> = {
+export type DataTableProps<T extends EntidadeDto> = {
   columns: ColumnDef<T>[]
-
   data?: T[]
   href?: RotasAppEnum
   isFetching?: boolean
+  paginationData?: FiltroPaginacaoResponseDto<T>
+  pageable?: FiltroPaginacao
+  onPageableChange?: (pageable: FiltroPaginacao) => void
+  searchPlaceholder?: string
+  searchAttribute?: string
+  // Propriedades para controle de tamanho da página
+  pageSizeOptions?: number[]
+  showPageSizeSelector?: boolean
 }
 
-export function DataTable<T>({ isFetching = false, ...props }: Readonly<DataTableProps<T>>) {
+export function DataTable<T extends EntidadeDto>({
+  isFetching = false,
+  paginationData,
+  pageable,
+  onPageableChange,
+  searchPlaceholder = "Filtrar por...",
+  searchAttribute = "nome",
+  pageSizeOptions = [1, 5, 10, 20, 50, 100],
+  showPageSizeSelector = true,
+  ...props
+}: Readonly<DataTableProps<T>>) {
   const [sorting, setSorting] = useState<SortingState>([])
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
   const [rowSelection, setRowSelection] = useState({})
+  const [searchValue, setSearchValue] = useState("")
+
+  const isServerSidePagination = !!paginationData && !!pageable && !!onPageableChange
+
+  const handleSearchChange = (value: string) => {
+    setSearchValue(value)
+
+    if (isServerSidePagination && onPageableChange && pageable) {
+      const newFilters = pageable.filters.filter(filter => filter.attribute !== searchAttribute)
+
+      if (value.trim()) {
+        newFilters.push({
+          attribute: searchAttribute,
+          operator: "contains",
+          type: "string",
+          values: [value.trim()]
+        })
+      }
+
+      onPageableChange({
+        ...pageable,
+        page: 0,
+        filters: newFilters
+      })
+    }
+  }
+
+  const handlePageSizeChange = (newPageSize: string) => {
+    if (isServerSidePagination && onPageableChange && pageable) {
+      const size = parseInt(newPageSize)
+      if (size > 0 && size <= 1000) { // Validação para evitar valores inválidos
+        onPageableChange({
+          ...pageable,
+          size: size,
+          page: 0
+        })
+      }
+    }
+  }
+
+  const tableData = useMemo(() => {
+    return isServerSidePagination ? (paginationData?.content ?? []) : (props.data ?? [])
+  }, [isServerSidePagination, paginationData?.content, props.data])
 
   const table = useReactTable({
-    data: props.data ?? [],
+    data: tableData,
     columns: props.columns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
     getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
+    ...(isServerSidePagination ? {
+      manualPagination: true,
+      pageCount: paginationData?.totalPages ?? -1,
+    } : {
+      getPaginationRowModel: getPaginationRowModel(),
+      manualPagination: false,
+    }),
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     onColumnVisibilityChange: setColumnVisibility,
     onRowSelectionChange: setRowSelection,
-    state: { sorting, columnFilters, columnVisibility, rowSelection },
+    state: {
+      sorting,
+      columnFilters,
+      columnVisibility,
+      rowSelection,
+      ...(isServerSidePagination ? {} : {})
+    },
   })
+
+  const handlePreviousPage = () => {
+    if (isServerSidePagination && onPageableChange && pageable) {
+      if (pageable.page > 0) onPageableChange({ ...pageable, page: pageable.page - 1 })
+    } else table.previousPage()
+  }
+
+  const handleNextPage = () => {
+    if (isServerSidePagination && onPageableChange && pageable && paginationData) {
+      const currentPosition = pageable.page * pageable.size
+      const nextPageStartPosition = currentPosition + pageable.size
+      if (nextPageStartPosition < paginationData.totalElements) {
+        onPageableChange({ ...pageable, page: pageable.page + 1 })
+      }
+    } else {
+      table.nextPage()
+    }
+  }
+
+  const canPreviousPage = () => {
+    if (isServerSidePagination && pageable) return pageable.page > 0
+    return table.getCanPreviousPage()
+  }
+
+  const canNextPage = () => {
+    if (isServerSidePagination && pageable && paginationData) {
+      const currentPosition = pageable.page * pageable.size
+      const nextPageStartPosition = currentPosition + pageable.size
+      return nextPageStartPosition < paginationData.totalElements
+    }
+    return table.getCanNextPage()
+  }
+
+  const getTotalElements = () => {
+    if (isServerSidePagination && paginationData) return paginationData.totalElements
+    return table.getRowCount()
+  }
 
   return (
     <div className="w-full">
@@ -68,13 +186,10 @@ export function DataTable<T>({ isFetching = false, ...props }: Readonly<DataTabl
           </Link>}
 
           <Input
-            disabled
-            placeholder="Filtrar por..."
-            // value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
-            // onChange={(event) =>
-            //   table.getColumn("email")?.setFilterValue(event.target.value)
-            // }
-            className="max-w-sm"
+            placeholder={searchPlaceholder}
+            value={searchValue}
+            onChange={(event) => handleSearchChange(event.target.value)}
+            className="min-w-full"
           />
         </div>
 
@@ -88,7 +203,7 @@ export function DataTable<T>({ isFetching = false, ...props }: Readonly<DataTabl
           <DropdownMenuContent align="end">
             {table
               .getAllColumns()
-              .filter((column) => column.getCanHide())
+              .filter((column) => column.getCanHide() && column.id !== "Ações")
               .map((column) => {
                 return (
                   <DropdownMenuCheckboxItem
@@ -166,21 +281,50 @@ export function DataTable<T>({ isFetching = false, ...props }: Readonly<DataTabl
 
       <div className="flex items-center justify-end space-x-2 py-4">
         <div className="flex-1 text-sm text-muted-foreground">
-          Total de registros: {table.getRowCount()}
+          {isServerSidePagination && paginationData ? (
+            <>
+              Exibindo {paginationData.content.length} de {paginationData.totalElements} registros
+              {paginationData.totalPages > 1 && (
+                <> - Página {(paginationData.pageable?.pageNumber ?? 0) + 1} de {paginationData.totalPages}</>
+              )}
+            </>
+          ) : (
+            `Total de registros: ${getTotalElements()}`
+          )}
         </div>
+
+        {isServerSidePagination && showPageSizeSelector && (
+          <div className="flex items-center space-x-2">
+            <Select
+              value={pageable?.size?.toString() ?? "10"}
+              onValueChange={handlePageSizeChange}
+            >
+              <SelectTrigger className="h-8 w-[70px]">
+                <SelectValue placeholder={pageable?.size?.toString() ?? "10"} />
+              </SelectTrigger>
+              <SelectContent side="top">
+                {pageSizeOptions.map((pageSize) => (
+                  <SelectItem key={pageSize} value={pageSize.toString()}>
+                    {pageSize}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+        )}
 
         <div className="space-x-2">
           <Button
             variant="outline"
-            onClick={() => table.previousPage()}
-            disabled={!table.getCanPreviousPage()}
+            onClick={handlePreviousPage}
+            disabled={!canPreviousPage()}
           >
             Anterior
           </Button>
           <Button
             variant="outline"
-            onClick={() => table.nextPage()}
-            disabled={!table.getCanNextPage()}
+            onClick={handleNextPage}
+            disabled={!canNextPage()}
           >
             Próximo
           </Button>

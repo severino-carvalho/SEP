@@ -5,15 +5,18 @@ import { ContainerPage } from "@/components/templates/container-page";
 import { ListagemLayout } from "@/components/templates/listagem-layout";
 import { Button } from "@/components/ui/button";
 import { gerarLinkDownload } from "@/lib/download";
+import { ErroUtil } from "@/lib/erros/erro-util";
 import { queryClient } from "@/lib/useQuery/query-client";
 import { toastService } from "@/lib/useQuery/toast-service";
 import { equipeService } from "@/services/equipe-service";
+import { FiltroPaginacao } from "@/types/dtos/filter";
 import { EquipeResDto } from "@/types/dtos/services/equipe";
 import { RotasApiEnum } from "@/types/enums/rotas-api-enum";
 import { RotasAppEnum } from "@/types/enums/rotas-app-enum";
 import { useQuery } from "@tanstack/react-query";
 import { ColumnDef } from "@tanstack/react-table";
 import { Download } from "lucide-react";
+import { useState } from "react";
 import { Fragment } from "react/jsx-runtime";
 
 const listaItensBreadcrumb: BreadcrumbListType[] = [
@@ -23,6 +26,7 @@ const listaItensBreadcrumb: BreadcrumbListType[] = [
 ]
 
 export function Equipe() {
+  const [pageable, setPageable] = useState<FiltroPaginacao>({ page: 0, size: 1, filters: [] });
   async function downloadPasta(pastaId: number) {
     const toastId = toastService.loading("Baixando pasta")
 
@@ -45,14 +49,18 @@ export function Equipe() {
       .catch(() => toastService.update(toastId, { render: "Erro ao remover equipe", type: "error" }))
   }
 
-  async function loadEquipes() {
-    const { content } = await equipeService.findPageable();
-    return content;
+  async function buscarEquipes() {
+    try {
+      return await equipeService.findPageable(pageable)
+    } catch {
+      ErroUtil.tratar("Erro ao buscar equipes")
+      return undefined
+    }
   }
 
   const { data: dadosTabela, isFetching } = useQuery({
-    queryKey: [RotasApiEnum.EQUIPE],
-    queryFn: async () => loadEquipes()
+    queryKey: [RotasApiEnum.EQUIPE, pageable],
+    queryFn: buscarEquipes
   })
 
   const colunasTabela: ColumnDef<EquipeResDto>[] = [
@@ -99,10 +107,14 @@ export function Equipe() {
     <ContainerPage className="gap-10" listaItensBreadcrumb={listaItensBreadcrumb}>
       <ListagemLayout tituloPage="Listagem de equipes" >
         <DataTable<EquipeResDto>
-          data={dadosTabela}
+          paginationData={dadosTabela}
+          pageable={pageable}
+          onPageableChange={setPageable}
           columns={colunasTabela}
           isFetching={isFetching}
           href={RotasAppEnum.CONFIGURACOES_EQUIPE_MANUTENCAO}
+          searchPlaceholder="Buscar por nome..."
+          searchAttribute="nome"
         />
       </ListagemLayout>
     </ContainerPage>

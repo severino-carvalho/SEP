@@ -1,6 +1,6 @@
 import { ServerApi } from '@/lib/axios/server-api';
 import { EntidadeDto } from '@/types/dtos/entidade.dto';
-import { FiltroPaginacao, FiltroPaginacaoResponseDto } from '@/types/dtos/filtro';
+import { FiltroPaginacao, FiltroPaginacaoResponseDto } from '@/types/dtos/filter';
 import { IGenericoService } from '@/types/services/GenericoService';
 
 export class SEPApiService<S, R extends EntidadeDto> implements IGenericoService<S, R> {
@@ -15,8 +15,8 @@ export class SEPApiService<S, R extends EntidadeDto> implements IGenericoService
 		return data
 	}
 
-	async findPageable(pageableFilters?: FiltroPaginacao): Promise<FiltroPaginacaoResponseDto<R>> {
-		const { data } = await this.serverAPI.get<FiltroPaginacaoResponseDto<R>>(this.url)
+	async findPageable(pageableFilters: FiltroPaginacao): Promise<FiltroPaginacaoResponseDto<R>> {
+		const { data } = await this.serverAPI.post<FiltroPaginacaoResponseDto<R>>(`${this.url}/listar-paginado`, pageableFilters)
 		return data
 	}
 

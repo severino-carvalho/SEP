@@ -1,6 +1,5 @@
 import { Acoes } from "@/components/molecules/tabela/acoes";
-import { AreaAtuacaoDto, EnderecoDto, EquipistaResDto, ParticipacaoEncontroDto, PastoralDto } from "@/types/dtos/services/equipista";
-import { EEstadoCivil, ESacramento } from "@/types/enums/app";
+import { EquipistaResDto } from "@/types/dtos/services/equipista";
 import { RotasAppEnum } from "@/types/enums/rotas-app-enum";
 import { ColumnDef } from "@tanstack/react-table";
 

@@ -3,14 +3,17 @@ import { DataTable } from "@/components/data-table";
 import { Acoes } from "@/components/molecules/tabela/acoes";
 import { ContainerPage } from "@/components/templates/container-page";
 import { ListagemLayout } from "@/components/templates/listagem-layout";
+import { ErroUtil } from "@/lib/erros/erro-util";
 import { queryClient } from "@/lib/useQuery/query-client";
 import { toastService } from "@/lib/useQuery/toast-service";
 import { encontroService } from "@/services/encontro-service";
+import { FiltroPaginacao } from "@/types/dtos/filter";
 import { EncontroResDto } from "@/types/dtos/services/encontro";
 import { RotasApiEnum } from "@/types/enums/rotas-api-enum";
 import { RotasAppEnum } from "@/types/enums/rotas-app-enum";
 import { useQuery } from "@tanstack/react-query";
 import { ColumnDef } from "@tanstack/react-table";
+import { useState } from "react";
 
 const listaItensBreadcrumb: BreadcrumbListType[] = [
   { titulo: "Home", href: RotasAppEnum.HOME },
@@ -19,6 +22,7 @@ const listaItensBreadcrumb: BreadcrumbListType[] = [
 ]
 
 export function Encontro() {
+  const [pageable, setPageable] = useState<FiltroPaginacao>({ page: 0, size: 1, filters: [] });
   async function onDeletarEncontro(encontroId: number) {
     const toastId = toastService.loading("Removendo encontro")
 
@@ -28,14 +32,18 @@ export function Encontro() {
     }).catch(() => toastService.update(toastId, { render: "Erro ao remover encontro", type: "error" }))
   }
 
-  async function loadEncontros() {
-    const { content } = await encontroService.findPageable();
-    return content;
+  async function buscarEncontros() {
+    try {
+      return await encontroService.findPageable(pageable)
+    } catch {
+      ErroUtil.tratar("Erro ao buscar encontros")
+      return undefined
+    }
   }
 
   const { data: dadosTabela, isFetching } = useQuery({
-    queryKey: [RotasApiEnum.ENCONTROS],
-    queryFn: async () => await loadEncontros()
+    queryKey: [RotasApiEnum.ENCONTROS, pageable],
+    queryFn: buscarEncontros
   })
 
   const colunasTabela: ColumnDef<EncontroResDto>[] = [
@@ -65,10 +73,14 @@ export function Encontro() {
     >
       <ListagemLayout tituloPage="Listagem de encontros" >
         <DataTable<EncontroResDto>
-          data={dadosTabela}
+          paginationData={dadosTabela}
+          pageable={pageable}
+          onPageableChange={setPageable}
           columns={colunasTabela}
           isFetching={isFetching}
           href={RotasAppEnum.CONFIGURACOES_ENCONTRO_MANUTENCAO}
+          searchPlaceholder="Buscar por nome..."
+          searchAttribute="nome"
         />
       </ListagemLayout>
     </ContainerPage>
